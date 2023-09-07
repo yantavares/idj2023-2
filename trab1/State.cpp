@@ -1,6 +1,6 @@
 #include <State.hpp>
 
-State::State() : quitRequested(false), bg()
+State::State() : quitRequested(false), bg("img/ocean.jpg")
 {
 }
 
@@ -18,6 +18,7 @@ void State::Update(float dt)
 
 void State::Render()
 {
+    bg.Render(0, 0);
 }
 
 bool State::QuitRequested()

@@ -2,8 +2,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
 #include <iostream>
-
-class Sprite;
+#include <Sprite.hpp>
 
 class Music;
 
@@ -17,7 +16,7 @@ public:
     void Render();
 
 private:
-    Sprite *bg;
+    Sprite bg;
     Music *music;
     bool quitRequested;
 };
