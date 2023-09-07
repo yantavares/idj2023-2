@@ -53,6 +53,15 @@ Game::Game(const string &title, int width, int height)
     }
 }
 
+Game &Game::GetInstance()
+{
+    if (instance == nullptr)
+    {
+        instance = new Game("Yan Tavares, 202041323 :)", 1024, 600);
+    }
+    return *instance;
+}
+
 Game::~Game()
 {
     delete &state;
@@ -70,7 +79,8 @@ Game::~Game()
 
 State &Game::GetState()
 {
-    return state;
+
+    return *state;
 }
 
 SDL_Renderer *Game::GetRenderer()
@@ -80,11 +90,14 @@ SDL_Renderer *Game::GetRenderer()
 
 void Game::Run()
 {
-    while (state.QuitRequested())
+    while (state->QuitRequested())
     {
-        state.Update(0.0);
-        state.Render();
-        SDL_RenderPresent(renderer);
+        state->Update(0.0);
+        state->Render();
+        if (renderer != nullptr)
+        {
+            SDL_RenderPresent(renderer);
+        }
         SDL_Delay(33);
     }
 }
