@@ -1,3 +1,6 @@
+#ifndef GAME_HPP
+#define GAME_HPP
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
@@ -22,3 +25,5 @@ private:
     SDL_Renderer *renderer;
     State state;
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef STATE_HPP
+#define STATE_HPP
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
@@ -20,3 +23,5 @@ private:
     Music *music;
     bool quitRequested;
 };
+
+#endif
