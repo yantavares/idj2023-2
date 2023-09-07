@@ -24,7 +24,7 @@ private:
     static Game *instance;
     SDL_Window *window;
     SDL_Renderer *renderer;
-    State state;
+    State *state;
 };
 
 #endif

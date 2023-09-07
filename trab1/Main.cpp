@@ -4,7 +4,7 @@
 
 int main(int argc, char **argv)
 {
-    Game game("Yan Tavares, 202041323 :)))", 1024, 600);
+    Game &game = Game::GetInstance();
     game.Run();
     return 0;
 }
