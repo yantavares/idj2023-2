@@ -2,7 +2,7 @@
 
 Game *Game::instance = nullptr;
 
-Game::Game(const string &title, int width, int height)
+Game::Game(string title, int width, int height)
 {
     if (instance != nullptr)
     {
@@ -90,14 +90,16 @@ SDL_Renderer *Game::GetRenderer()
 
 void Game::Run()
 {
-    while (state->QuitRequested())
+    while (state->QuitRequested() == false)
     {
+        // Update game objects
         state->Update(0.0);
+
+        // Render game objects
+        SDL_RenderClear(renderer);
         state->Render();
-        if (renderer != nullptr)
-        {
-            SDL_RenderPresent(renderer);
-        }
+        SDL_RenderPresent(renderer);
+
         SDL_Delay(33);
     }
 }

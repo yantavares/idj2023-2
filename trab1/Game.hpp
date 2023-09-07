@@ -13,7 +13,7 @@ using namespace std;
 class Game
 {
 public:
-    Game(const string &title, int width, int height);
+    Game(string title, int width, int height);
     ~Game();
     void Run();
     SDL_Renderer *GetRenderer();
