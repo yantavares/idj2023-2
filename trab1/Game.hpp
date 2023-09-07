@@ -2,10 +2,10 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
 #include <iostream>
+#include <State.hpp>
 
 using namespace std;
 
-class State;
 class Game
 {
 public:
@@ -20,5 +20,5 @@ private:
     static Game *instance;
     SDL_Window *window;
     SDL_Renderer *renderer;
-    State *state;
+    State state;
 };
