@@ -5,8 +5,9 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
 #include <iostream>
-#include <Sprite.hpp>
-#include <Music.hpp>
+
+#include "Sprite.hpp"
+#include "Music.hpp"
 
 class Music;
 

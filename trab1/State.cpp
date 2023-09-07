@@ -1,4 +1,4 @@
-#include <State.hpp>
+#include "State.hpp"
 
 State::State() : quitRequested(false), bg("img/ocean.jpg"), music("audio/stageState.ogg")
 {

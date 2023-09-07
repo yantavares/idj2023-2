@@ -1,8 +1,10 @@
 #ifndef MUSIC_HPP
 #define MUSIC_HPP
 
-#include <string>
+#include <iostream>
 #include <SDL2/SDL_mixer.h>
+
+using namespace std;
 
 class Music
 {

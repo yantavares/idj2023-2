@@ -1,5 +1,5 @@
-#include <Sprite.hpp>
-#include <Game.hpp>
+#include "Sprite.hpp"
+#include "Game.hpp"
 
 Sprite::Sprite() : texture(nullptr), width(0), height(0)
 {
