@@ -1,7 +1,10 @@
 #include "State.hpp"
 
-State::State() : quitRequested(false), bg("img/ocean.jpg"), music("audio/stageState.ogg")
+State::State()
 {
+    quitRequested = false;
+    bg.Open("ocean.jpg");
+    music.Open("audio/stageState.ogg");
 }
 
 void State::LoadAssets()
@@ -19,6 +22,7 @@ void State::Update(float dt)
 void State::Render()
 {
     bg.Render(0, 0);
+    music.Play();
 }
 
 bool State::QuitRequested()

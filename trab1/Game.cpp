@@ -96,10 +96,9 @@ void Game::Run()
 {
     while (state != nullptr && state->QuitRequested() == false)
     {
-        // Update game objects
+        state->LoadAssets();
         state->Update(0.0);
 
-        // Render game objects
         SDL_RenderClear(renderer);
         state->Render();
         SDL_RenderPresent(renderer);

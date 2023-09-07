@@ -1,12 +1,14 @@
 #include "Sprite.hpp"
 #include "Game.hpp"
 
-Sprite::Sprite() : texture(nullptr), width(0), height(0)
+Sprite::Sprite()
 {
+    texture = nullptr;
 }
 
-Sprite::Sprite(string file) : texture(nullptr), width(0), height(0)
+Sprite::Sprite(string file)
 {
+    texture = nullptr;
     Open(file);
 }
 
@@ -46,6 +48,7 @@ void Sprite::Render(int x, int y)
     SDL_Rect dstRect = {x, y, clipRect.w, clipRect.h};
     SDL_Renderer *renderer = Game::GetInstance().GetRenderer();
     SDL_RenderCopy(renderer, texture, &clipRect, &dstRect);
+    SetClip(x, y, width, height);
 }
 
 int Sprite::GetWidth()

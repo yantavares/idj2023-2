@@ -9,8 +9,6 @@
 #include "Sprite.hpp"
 #include "Music.hpp"
 
-class Music;
-
 class State
 {
 public:
