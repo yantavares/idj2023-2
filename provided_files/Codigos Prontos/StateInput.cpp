@@ -31,7 +31,7 @@ void State::Input() {
 					Face* face = (Face*)go->GetComponent( "Face" );
 					if ( nullptr != face ) {
 						// Aplica dano
-						face->Damage(std::rand() % 10 + 10);
+						face->Damage(rand() % 10 + 10);
 						// Sai do loop (só queremos acertar um)
 						break;
 					}

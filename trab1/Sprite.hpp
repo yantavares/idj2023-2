@@ -9,9 +9,9 @@ class Sprite
 {
 public:
     Sprite();
-    Sprite(std::string file);
+    Sprite(string file);
     ~Sprite();
-    void Open(std::string file);
+    void Open(string file);
     void SetClip(int x, int y, int w, int h);
     void Render(int x, int y);
     int GetWidth();

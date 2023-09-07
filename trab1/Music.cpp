@@ -7,7 +7,7 @@ Music::Music() : music(nullptr)
 {
 }
 
-Music::Music(std::string file) : music(nullptr)
+Music::Music(string file) : music(nullptr)
 {
     Open(file);
 }
@@ -52,7 +52,7 @@ void Music::Stop(int msToStop)
     }
 }
 
-void Music::Open(std::string file)
+void Music::Open(string file)
 {
     music = Mix_LoadMUS(file.c_str());
     if (music == nullptr)

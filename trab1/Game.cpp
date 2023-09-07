@@ -2,36 +2,36 @@
 
 Game *Game::instance = nullptr;
 
-Game::Game(const std::string &title, int width, int height)
+Game::Game(const string &title, int width, int height)
 {
     if (instance != nullptr)
     {
-        std::cerr << "Error: Only one instance of Game is allowed." << std::endl;
+        cerr << "Error: Only one instance of Game is allowed." << endl;
         exit(1);
     }
     instance = this;
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
-        std::cerr << "Error: Failed to initialize SDL: " << SDL_GetError() << std::endl;
+        cerr << "Error: Failed to initialize SDL: " << SDL_GetError() << endl;
         exit(1);
     }
 
     if ((IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF) & (IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF)) != (IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF))
     {
-        std::cerr << "Error: Failed to initialize SDL_Image: " << IMG_GetError() << std::endl;
+        cerr << "Error: Failed to initialize SDL_Image: " << IMG_GetError() << endl;
         exit(1);
     }
 
     if (Mix_Init(MIX_INIT_OGG) < 0)
     {
-        std::cerr << "Error: Failed to initialize SDL_mixer: " << Mix_GetError() << std::endl;
+        cerr << "Error: Failed to initialize SDL_mixer: " << Mix_GetError() << endl;
         exit(1);
     }
 
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0)
     {
-        std::cerr << "Error: Failed to open audio device: " << Mix_GetError() << std::endl;
+        cerr << "Error: Failed to open audio device: " << Mix_GetError() << endl;
         exit(1);
     }
 
@@ -41,14 +41,14 @@ Game::Game(const std::string &title, int width, int height)
 
     if (window == nullptr)
     {
-        std::cerr << "Error: Failed to create SDL window: " << SDL_GetError() << std::endl;
+        cerr << "Error: Failed to create SDL window: " << SDL_GetError() << endl;
         exit(1);
     }
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (renderer == nullptr)
     {
-        std::cerr << "Error: Failed to create SDL renderer: " << SDL_GetError() << std::endl;
+        cerr << "Error: Failed to create SDL renderer: " << SDL_GetError() << endl;
         exit(1);
     }
 }

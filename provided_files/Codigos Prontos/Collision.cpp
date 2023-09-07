@@ -37,13 +37,13 @@ class Collision {
 
 				for (int i = 0; i < 4; ++i) P[i] = Dot(A[i], axis);
 
-				float minA = *std::min_element(P, P + 4);
-				float maxA = *std::max_element(P, P + 4);
+				float minA = *min_element(P, P + 4);
+				float maxA = *max_element(P, P + 4);
 
 				for (int i = 0; i < 4; ++i) P[i] = Dot(B[i], axis);
 
-				float minB = *std::min_element(P, P + 4);
-				float maxB = *std::max_element(P, P + 4);
+				float minB = *min_element(P, P + 4);
+				float maxB = *max_element(P, P + 4);
 
 				if (maxA < minB || minA > maxB)
 					return false;
@@ -55,7 +55,7 @@ class Collision {
 	private:
 
 		static inline float Mag(const Vec2& p) {
-			return std::sqrt(p.x * p.x + p.y * p.y);
+			return sqrt(p.x * p.x + p.y * p.y);
 		}
 
 		static inline Vec2 Norm(const Vec2& p) {
@@ -67,7 +67,7 @@ class Collision {
 		}
 
 		static inline Vec2 Rotate(const Vec2& p, float angle) {
-			float cs = std::cos(angle), sn = std::sin(angle);
+			float cs = cos(angle), sn = sin(angle);
 			return Vec2 ( p.x * cs - p.y * sn, p.x * sn + p.y * cs );
 		}
 };
