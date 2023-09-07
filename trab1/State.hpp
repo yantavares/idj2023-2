@@ -6,6 +6,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <iostream>
 #include <Sprite.hpp>
+#include <Music.hpp>
 
 class Music;
 
@@ -20,7 +21,7 @@ public:
 
 private:
     Sprite bg;
-    Music *music;
+    Music music;
     bool quitRequested;
 };
 
