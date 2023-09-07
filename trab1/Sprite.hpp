@@ -5,6 +5,8 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 
+using namespace std;
+
 class Sprite
 {
 public:
