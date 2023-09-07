@@ -4,6 +4,7 @@ Game *Game::instance = nullptr;
 
 Game::Game(string title, int width, int height)
 {
+
     if (instance != nullptr)
     {
         cerr << "Error: Only one instance of Game is allowed." << endl;
@@ -51,10 +52,13 @@ Game::Game(string title, int width, int height)
         cerr << "Error: Failed to create SDL renderer: " << SDL_GetError() << endl;
         exit(1);
     }
+
+    state = new State();
 }
 
 Game &Game::GetInstance()
 {
+
     if (instance == nullptr)
     {
         instance = new Game("Yan Tavares, 202041323 :)", 1024, 600);
@@ -90,7 +94,7 @@ SDL_Renderer *Game::GetRenderer()
 
 void Game::Run()
 {
-    while (state->QuitRequested() == false)
+    while (state != nullptr && state->QuitRequested() == false)
     {
         // Update game objects
         state->Update(0.0);
