@@ -1,3 +1,0 @@
-How to run sdl2 code in Linux:
-
-g++ [filename] -w -lSDL2
