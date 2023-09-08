@@ -1,0 +1,1 @@
+g++ Main.cpp Game.cpp State.cpp Sprite.cpp Music.cpp -w -lSDL2 -lSDL2_mixer -lSDL2_image -o game

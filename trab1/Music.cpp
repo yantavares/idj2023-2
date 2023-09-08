@@ -4,12 +4,14 @@
 
 using namespace std;
 
-Music::Music() : music(nullptr)
+Music::Music()
 {
+    music = nullptr;
 }
 
-Music::Music(string file) : music(nullptr)
+Music::Music(string file)
 {
+    music = nullptr;
     Open(file);
 }
 
@@ -26,15 +28,7 @@ void Music::Play(int times)
 {
     if (music != nullptr)
     {
-        if (Mix_PlayingMusic() == 0)
-        {
-            Mix_PlayMusic(music, times);
-        }
-        else
-        {
-            Mix_HaltMusic();
-            Mix_PlayMusic(music, times);
-        }
+        Mix_PlayMusic(music, times);
     }
 }
 
