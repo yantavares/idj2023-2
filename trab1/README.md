@@ -1,8 +1,9 @@
 # Requisitos
 
-- lSDL2
-- lSDL2_mixer
-- lSDL2_image
+1. lSDL2
+2. lSDL2_mixer
+3. lSDL2_image
+4. (Opcional) Make
 
 # COMO RODAR O TRABALHO 1
 
@@ -30,7 +31,7 @@ No diretório onde encontra-se o Makefile, rode o comando
 $ make
 ```
 
-Ele gerará um executável `game.o` (Linux ou Mac) ou `game.exe` na pasta `src`. Execute-o como preferir.
+Ele gerará um executável `game.o` (Linux ou Mac) ou `game.exe` (Windows) na pasta `/src`. Execute-o como preferir.
 
 ## Alternativa 3
 
@@ -47,3 +48,15 @@ $ g++ Main.cpp Game.cpp State.cpp Sprite.cpp Music.cpp -w -lSDL2 -lSDL2_mixer -l
 ```
 
 Depois apenas execute o arquivo `game` gerado.
+
+## Alternativa 4 ( O famoso "Confia!")
+
+Há um arquivo `game.o` já compilado na pasta `trab1/src`. Se preferir, apenas execute-o.
+
+## Clean
+
+Para limpar os executáveis criados, basta rodar o comando
+
+```bash
+$ make clean
+```
