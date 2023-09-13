@@ -57,7 +57,7 @@ Depois apenas execute o arquivo `game` gerado.
 
 ## Alternativa 4 ( O famoso "Confia!")
 
-Há um arquivo `game.o` já compilado na pasta `jogo_do_pinguim/bin`. Se preferir, apenas execute-o.
+Há um arquivo executável `game` já compilado na pasta `jogo_do_pinguim/bin`. Se preferir, apenas execute-o.
 
 ## Clean
 
