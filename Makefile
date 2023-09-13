@@ -6,7 +6,7 @@ TARGET = $(BINDIR)/game
 SRCS = $(shell find $(SRCDIR) -name "*.cpp")
 CMD = g++ $(SRCS) $(CXXFLAGS) -o $(TARGET)
 
-all:
+all:$(TARGET)
 	mkdir -p $(BINDIR)
 	$(CMD)
 
@@ -15,7 +15,7 @@ all:
 clean:
 	rm -rf $(BINDIR)
 
-run:
+run:$(TARGET)
 	mkdir -p $(BINDIR)
 	$(CMD)
 	cd $(BINDIR) && ./game
