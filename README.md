@@ -35,7 +35,7 @@ No diretório onde encontra-se o Makefile, rode o comando
 $ make
 ```
 
-Ele gerará um executável `game.o` (Linux ou Mac) ou `game.exe` (Windows) na pasta `jogo_do_pinguim/bin`. Execute-o como preferir.
+Ele gerará um executável `game` (Linux ou Mac) ou `game.exe` (Windows) na pasta `jogo_do_pinguim/bin`. Execute-o como preferir.
 
 ## Alternativa 3
 
@@ -66,4 +66,3 @@ Para limpar os executáveis criados, basta rodar o comando
 ```bash
 $ make clean
 ```
-
