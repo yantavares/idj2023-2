@@ -3,8 +3,8 @@
 State::State()
 {
     quitRequested = false;
-    bg.Open("../../../public/img/ocean.jpg");
-    music.Open("../../../public/audio/stageState.ogg");
+    bg.Open("../public/img/ocean.jpg");
+    music.Open("../public/audio/stageState.ogg");
     music.Play(-1);
 }
 
