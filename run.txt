@@ -1,1 +1,1 @@
-g++ jogo_do_pinguim/src/Main.cpp jogo_do_pinguim/src/game/Game/Game.cpp jogo_do_pinguim/src/game/State/State.cpp jogo_do_pinguim/src/components/Sprite/Sprite.cpp jogo_do_pinguim/src/game/Music/Music.cpp  -w -lsdl2 -lsdl2_mixer -lsdl2_image -o game
+g++ jogo_do_pinguim/src/Main.cpp jogo_do_pinguim/src/game/Game/Game.cpp jogo_do_pinguim/src/game/State/State.cpp jogo_do_pinguim/src/components/Sprite/Sprite.cpp jogo_do_pinguim/src/game/Music/Music.cpp  -w -lSDL2 -lSDL2_mixer -lSDL2_image -o game
