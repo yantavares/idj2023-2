@@ -6,7 +6,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <iostream>
 
-#include "Sprite.hpp"
+#include "../../components/Sprite/Sprite.hpp"
 #include "../Music/Music.hpp"
 
 class State

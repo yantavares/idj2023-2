@@ -2,6 +2,8 @@
 
 using namespace std;
 
+// TODO
+
 class Component
 {
 private:
