@@ -6,11 +6,6 @@ TARGET = $(BINDIR)/game
 SRCS = $(shell find $(SRCDIR) -name "*.cpp")
 CMD = $(CXX) $(SRCS) $(CXXFLAGS) -o $(TARGET)
 
-ifeq ($(shell uname), Darwin)
-	CXX = clang
-    CXXFLAGS = -I/Library/Frameworks/SDL2.framework/Headers -F/Library/Frameworks -framework SDL2
-endif
-
 all:
 	mkdir -p $(BINDIR)
 	$(CMD)
