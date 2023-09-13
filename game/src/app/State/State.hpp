@@ -7,7 +7,7 @@
 #include <iostream>
 
 #include "Sprite.hpp"
-#include "Music.hpp"
+#include "../Music/Music.hpp"
 
 class State
 {

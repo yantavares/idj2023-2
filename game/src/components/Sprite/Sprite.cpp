@@ -1,5 +1,4 @@
 #include "Sprite.hpp"
-#include "Game.hpp"
 
 Sprite::Sprite()
 {
