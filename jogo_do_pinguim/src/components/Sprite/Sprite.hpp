@@ -5,8 +5,6 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 
-#include "../../game/Game/Game.hpp"
-
 using namespace std;
 
 class Sprite
