@@ -31,4 +31,5 @@
 *.out
 *.app
 
+# CCLS (NeoVim) cache
 .cclscache
