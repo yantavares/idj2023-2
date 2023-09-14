@@ -1,3 +1,6 @@
+# ifndef COMPONENT_HPP
+# define COMPONENT_HPP
+
 #include <iostream>
 
 using namespace std;
@@ -12,4 +15,10 @@ protected:
 public:
     Component(GameObject &associated);
     virtual ~Component();
+
+    virtual void Update(float dt) = 0;
+    virtual void Render() = 0;
+    virtual bool Is(string type) = 0;
 };
+
+# endif

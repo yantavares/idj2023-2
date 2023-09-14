@@ -7,10 +7,11 @@
 
 using namespace std;
 
-class Sprite
+class Sprite : public Component
 {
 public:
     Sprite();
+    Sprite(GameObject &associated);
     Sprite(string file);
     ~Sprite();
     void Open(string file);
@@ -19,6 +20,10 @@ public:
     int GetWidth();
     int GetHeight();
     bool IsOpen();
+
+    // ? Component
+    void Update(float dt);
+    void Is(string type);
 
 private:
     SDL_Texture *texture;
