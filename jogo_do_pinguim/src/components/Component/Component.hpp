@@ -2,21 +2,14 @@
 
 using namespace std;
 
-// TODO
+class GameObject;
 
 class Component
 {
-private:
-    /* data */
+protected:
+    GameObject &associated;
+
 public:
-    Component(/* args */);
-    ~Component();
+    Component(GameObject &associated);
+    virtual ~Component();
 };
-
-Component::Component(/* args */)
-{
-}
-
-Component::~Component()
-{
-}
