@@ -1,11 +1,10 @@
-# ifndef COMPONENT_HPP
-# define COMPONENT_HPP
+#ifndef COMPONENT_HPP
+#define COMPONENT_HPP
 
 #include <iostream>
+#include "../GameObject/GameObject.hpp"
 
 using namespace std;
-
-class GameObject;
 
 class Component
 {
@@ -21,4 +20,4 @@ public:
     virtual bool Is(string type) = 0;
 };
 
-# endif
+#endif

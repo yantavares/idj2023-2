@@ -5,14 +5,16 @@
 #include <SDL2/SDL_image.h>
 #include <iostream>
 
+#include "../Component/Component.hpp"
+
 using namespace std;
 
 class Sprite : public Component
 {
 public:
-    Sprite();
+    /* Sprite(); */
     Sprite(GameObject &associated);
-    Sprite(string file);
+    Sprite(string file, GameObject &associated);
     ~Sprite();
     void Open(string file);
     void SetClip(int x, int y, int w, int h);
@@ -23,7 +25,7 @@ public:
 
     // ? Component
     void Update(float dt);
-    void Is(string type);
+    bool Is(string type);
 
 private:
     SDL_Texture *texture;
