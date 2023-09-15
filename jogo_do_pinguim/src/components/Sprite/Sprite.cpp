@@ -6,10 +6,10 @@ Sprite::Sprite(GameObject &associated) : Component(associated)
     texture = nullptr;
 }
 
-/* Sprite::Sprite()
+Sprite::Sprite()
 {
     texture = nullptr;
-} */
+}
 
 Sprite::Sprite(string file, GameObject &associated) : Component(associated)
 {
