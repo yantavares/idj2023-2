@@ -12,16 +12,17 @@ using namespace std;
 class Sprite : public Component
 {
 public:
-    Sprite();
     Sprite(GameObject &associated);
     Sprite(string file, GameObject &associated);
     ~Sprite();
     void Open(string file);
     void SetClip(int x, int y, int w, int h);
-    void Render(int x, int y);
+    void Render();
     int GetWidth();
     int GetHeight();
     bool IsOpen();
+    void Update(float dt);
+    bool Is(string type);
 
 private:
     SDL_Texture *texture;

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
 #include "../../geometry/Rect/Rect.hpp"
 #include "../Component/Component.hpp"
 
@@ -25,7 +26,7 @@ public:
     Rect box;
 
 private:
-    vector<Component *> components;
+    vector<unique_ptr<Component>> components;
     bool isDead;
 };
 

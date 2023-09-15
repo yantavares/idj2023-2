@@ -7,13 +7,18 @@
 State::State()
 {
     quitRequested = false;
-    bg.Open("../public/img/ocean.jpg");
-    music.Open("../public/audio/stageState.ogg");
-    music.Play(-1);
+    LoadAssets();
 }
 
 void State::LoadAssets()
 {
+    GameObject *background = new GameObject();
+    Sprite *bg = new Sprite("../public/assets/img/ocean.jpg", *background);
+    background->box = {0, 0, bg->GetWidth(), bg->GetHeight()};
+    objectArray.emplace_back(background);
+
+    music = new Music("../public/assets/audio/stageState.ogg");
+    music->Play();
 }
 
 void State::Update(float dt)
@@ -26,7 +31,8 @@ void State::Update(float dt)
 
 void State::Render()
 {
-    bg.Render(0, 0);
+    for (int i = 0; i < objectArray.size(); i++)
+        objectArray[i]->Render();
 }
 
 bool State::QuitRequested()
@@ -72,32 +78,31 @@ void State::Input()
                 // Esse código, assim como a classe Face, é provisório. Futuramente, para
                 // chamar funções de GameObjects, use objectArray[i]->função() direto.
 
-                /*   if (go->box.Contains({(float)mouseX, (float)mouseY}))
-                  {
-                      Face *face = (Face *)go->GetComponent("Face");
-                      if (nullptr != face)
-                      {
-                          // Aplica dano
-                          face->Damage(rand() % 10 + 10);
-                          // Sai do loop (só queremos acertar um)
-                          break;
-                      }
-                  }
-              }
-          }
-          if (event.type == SDL_KEYDOWN)
-          {
-              // Se a tecla for ESC, setar a flag de quit
-              if (event.key.keysym.sym == SDLK_ESCAPE)
-              {
-                  quitRequested = true;
-              }
-              // Se não, crie um objeto
-              else
-              {
-                  Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(mouseX, mouseY);
-                  AddObject((int)objPos.x, (int)objPos.y);
-              } */
+                if (go->box.Contains({(float)mouseX, (float)mouseY}))
+                {
+                    Face *face = (Face *)go->GetComponent("Face");
+                    if (nullptr != face)
+                    {
+                        // Aplica dano
+                        face->Damage(rand() % 10 + 10);
+                        // Sai do loop (só queremos acertar um)
+                        break;
+                    }
+                }
+            }
+        }
+        if (event.type == SDL_KEYDOWN)
+        {
+            // Se a tecla for ESC, setar a flag de quit
+            if (event.key.keysym.sym == SDLK_ESCAPE)
+            {
+                quitRequested = true;
+            }
+            // Se não, crie um objeto
+            else
+            {
+                Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(mouseX, mouseY);
+                AddObject((int)objPos.x, (int)objPos.y);
             }
         }
     }
@@ -128,16 +133,13 @@ void State::Render()
     }
 }
 
-void State::AddObject(int mouseX, int mouseY)
+void State::AddObject(int x, int y)
 {
     GameObject *go = new GameObject();
-    go->box.x = mouseX;
-    go->box.y = mouseY;
-    Sprite *sprite = new Sprite(*go);
-    go->AddComponent(sprite);
-    Face *face = new Face(*go);
-    go->AddComponent(face);
-    Sound *sound = new Sound(*go, "../public/audio/boom.wav");
-    go->AddComponent(sound);
+    Sprite *enemy = new Sprite("assets/img/penguinface.png", *go);
+    go->box = {x, y, enemy->GetWidth(), enemy->GetHeight()};
+    go->AddComponent(enemy);
+    go->AddComponent(new Face(*go));
+    go->AddComponent(new Sound(*go, "assets/audio/boom.wav"));
     objectArray.emplace_back(go);
 }

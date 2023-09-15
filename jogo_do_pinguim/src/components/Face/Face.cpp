@@ -13,16 +13,21 @@ void Face::Damage(int damage)
     hitpoints -= damage;
     if (hitpoints <= 0)
     {
-        associated.RequestDelete();
-        Component *sound = associated.GetComponent("Sound");
+        Sound *sound = (Sound *)associated.GetComponent("Sound");
         if (sound != nullptr)
         {
-            ((Sound *)sound)->Play();
+            sound->Play();
         }
+        associated.RemoveComponent(sound);
+        associated.RequestDelete();
     }
 }
 
 void Face::Update(float dt)
+{
+}
+
+Face::~Face()
 {
 }
 

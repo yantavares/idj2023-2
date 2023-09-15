@@ -11,6 +11,8 @@
 #include "../../components/Sprite/Sprite.hpp"
 #include "../Music/Music.hpp"
 
+using namespace std;
+
 class State
 {
 public:
@@ -22,8 +24,7 @@ public:
     void Render();
 
 private:
-    Sprite bg;
-    Music music;
+    Music *music;
     bool quitRequested;
     vector<unique_ptr<GameObject>> objectArray;
 

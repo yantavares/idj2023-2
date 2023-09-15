@@ -15,3 +15,13 @@ Rect::Rect(float x, float y, float w, float h)
     this->w = w;
     this->h = h;
 }
+
+bool Rect::Contains(float x, float y)
+{
+    return x >= this->x && x <= this->x + w && y >= this->y && y <= this->y + h;
+}
+
+bool Rect::Contains(Vec2 b)
+{
+    return b.x >= this->x && b.x <= this->x + w && b.y >= this->y && b.y <= this->y + h;
+}

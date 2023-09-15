@@ -6,15 +6,11 @@ Sprite::Sprite(GameObject &associated) : Component(associated)
     texture = nullptr;
 }
 
-Sprite::Sprite()
-{
-    texture = nullptr;
-}
-
 Sprite::Sprite(string file, GameObject &associated) : Component(associated)
 {
     texture = nullptr;
     Open(file);
+    SetClip(0, 0, width, height);
 }
 
 Sprite::~Sprite()
@@ -48,25 +44,36 @@ void Sprite::SetClip(int x, int y, int w, int h)
     clipRect.h = h;
 }
 
-void Sprite::Render(int x, int y)
+void Sprite::Render()
 {
-    SDL_Rect dstRect = {x, y, clipRect.w, clipRect.h};
-    SDL_Renderer *renderer = Game::GetInstance().GetRenderer();
-    SDL_RenderCopy(renderer, texture, &clipRect, &dstRect);
-    SetClip(x, y, width, height);
+    SDL_Rect dstRect;
+    dstRect.x = associated.box.x;
+    dstRect.y = associated.box.y;
+    dstRect.h = height;
+    dstRect.w = width;
+    SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect);
 }
 
 int Sprite::GetWidth()
 {
-    return width;
+    return clipRect.w;
 }
 
 int Sprite::GetHeight()
 {
-    return height;
+    return clipRect.h;
 }
 
 bool Sprite::IsOpen()
 {
     return texture != nullptr;
+}
+
+void Sprite::Update(float dt)
+{
+}
+
+bool Sprite::Is(string type)
+{
+    return type == "Sprite" ? true : false;
 }
