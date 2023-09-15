@@ -2,7 +2,7 @@
 #define FACE_HPP
 
 #include <iostream>
-#include "Component.hpp"
+#include "../Component/Component.hpp"
 
 using namespace std;
 
