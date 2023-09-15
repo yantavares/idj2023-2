@@ -9,6 +9,8 @@
 
 using namespace std;
 
+class Component;
+
 class GameObject
 {
 public:

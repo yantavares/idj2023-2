@@ -2,20 +2,28 @@
 
 Sound::Sound(GameObject &associated) : Component(associated)
 {
-    chunk = nullptr;
     this->associated = associated;
+    chunk = nullptr;
 }
 
 Sound::Sound(GameObject &associated, string file) : Component(associated)
 {
-    chunk = nullptr;
     this->associated = associated;
     Open(file);
 }
 
-void Sound::Play(int times = 1)
+Sound::~Sound()
 {
-    channel = Mix_PlayChannel(-1, chunk, times - 1);
+    if (chunk != nullptr)
+    {
+        Mix_HaltChannel(channel);
+    }
+    Mix_FreeChunk(chunk);
+}
+
+void Sound::Play(int times)
+{
+    channel = Mix_PlayChannel(-1, chunk, times);
 }
 
 void Sound::Stop()
@@ -23,20 +31,20 @@ void Sound::Stop()
     Mix_HaltChannel(channel);
 }
 
-void Sound::Open(string file)
+void Sound::Open(std::string file)
 {
     chunk = Mix_LoadWAV(file.c_str());
-    if (chunk == nullptr)
-    {
-        cout << "Mix_LoadWAV: " << SDL_GetError() << endl;
-        exit(-1);
-    }
 }
 
-Sound::~Sound()
+void Sound::Update(float dt)
 {
-    if (chunk != nullptr)
-    {
-        Mix_FreeChunk(chunk);
-    }
+}
+
+void Sound::Render()
+{
+}
+
+bool Sound::Is(string type)
+{
+    return type == "Sound" ? true : false;
 }

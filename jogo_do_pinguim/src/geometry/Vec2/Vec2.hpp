@@ -1,3 +1,6 @@
+#ifndef VEC2_HPP
+#define VEC2_HPP
+
 #include <cmath>
 
 #define PI 3.1415
@@ -12,3 +15,5 @@ public:
     Vec2 GetRotated(float rad);
     Vec2 operator+(Vec2 b);
 };
+
+#endif

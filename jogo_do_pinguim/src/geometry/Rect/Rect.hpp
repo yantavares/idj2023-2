@@ -1,3 +1,6 @@
+#ifndef RECT_HPP
+#define RECT_HPP
+
 #include <iostream>
 
 #include "../Vec2/Vec2.hpp"
@@ -14,3 +17,5 @@ public:
   bool Contains(float x, float y);
   bool Contains(Vec2 b);
 };
+
+#endif
