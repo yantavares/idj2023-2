@@ -14,12 +14,15 @@ void Face::Damage(int damage)
     if (hitpoints <= 0)
     {
         Sound *sound = (Sound *)associated.GetComponent("Sound");
+        associated.RequestDelete();
         if (sound != nullptr)
         {
             sound->Play();
+
+            // Others solutions didnt work :(
+            SDL_Delay(1000);
         }
         associated.RemoveComponent(sound);
-        associated.RequestDelete();
     }
 }
 
