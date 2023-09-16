@@ -28,7 +28,8 @@ public:
     Rect box;
 
 private:
-    vector<unique_ptr<Component>> components;
+    // Needs to be shared to work!
+    vector<shared_ptr<Component>> components;
     bool isDead;
 };
 
