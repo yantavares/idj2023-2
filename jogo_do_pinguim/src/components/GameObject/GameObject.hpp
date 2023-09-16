@@ -23,6 +23,7 @@ public:
     void RequestDelete();
     void AddComponent(Component *cpt);
     void RemoveComponent(Component *cpt);
+    void RemoveComponentType(string type);
     Component *GetComponent(string type);
 
     Rect box;

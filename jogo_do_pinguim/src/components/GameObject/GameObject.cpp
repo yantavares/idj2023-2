@@ -69,3 +69,16 @@ Component *GameObject::GetComponent(string type)
     }
     return nullptr;
 }
+
+void GameObject::RemoveComponentType(string type)
+{
+    for (unsigned int i = 0; i < components.size(); i++)
+    {
+        if (components[i]->Is(type))
+        {
+            cout << "Found" << endl;
+            components.erase(components.begin() + i);
+            break;
+        }
+    }
+}

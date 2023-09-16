@@ -14,7 +14,6 @@ protected:
     GameObject &associated;
 
 public:
-    Component();
     Component(GameObject &associated);
     virtual ~Component();
 

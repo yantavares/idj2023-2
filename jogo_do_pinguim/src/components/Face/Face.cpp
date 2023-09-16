@@ -13,15 +13,19 @@ void Face::Damage(int damage)
     hitpoints -= damage;
     if (hitpoints <= 0)
     {
+        // Deleting sprite doesnt work for some reason...
+        associated.RemoveComponentType("Sprite");
+
+        SDL_Delay(100);
+
         Sound *sound = (Sound *)associated.GetComponent("Sound");
-        associated.RequestDelete();
         if (sound != nullptr)
         {
             sound->Play();
-
             // Others solutions didnt work :(
             SDL_Delay(1000);
         }
+        associated.RequestDelete();
         associated.RemoveComponent(sound);
     }
 }
