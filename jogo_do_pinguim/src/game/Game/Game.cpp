@@ -4,7 +4,6 @@ Game *Game::instance = nullptr;
 
 Game::Game(string title, int width, int height)
 {
-
     if (instance != nullptr)
     {
         cerr << "Error: Only one instance of Game is allowed." << endl;
@@ -94,15 +93,11 @@ SDL_Renderer *Game::GetRenderer()
 
 void Game::Run()
 {
-    while (state != nullptr && state->QuitRequested() == false)
+    state = new State();
+    while (!state->QuitRequested())
     {
-        state->LoadAssets();
-        state->Update(0.0);
-
-        SDL_RenderClear(renderer);
         state->Render();
-        SDL_RenderPresent(renderer);
-
-        SDL_Delay(33);
+        SDL_RenderPresent(Game::GetInstance().GetRenderer());
+        state->Update(33);
     }
 }

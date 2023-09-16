@@ -15,6 +15,7 @@ void State::LoadAssets()
     GameObject *background = new GameObject();
     Sprite *bg = new Sprite("../public/img/ocean.jpg", *background);
     background->box = {0, 0, bg->GetWidth(), bg->GetHeight()};
+    background->AddComponent(bg);
     objectArray.emplace_back(background);
 
     music = new Music("../public/audio/stageState.ogg");
@@ -96,24 +97,23 @@ void State::Input()
 
 void State::Update(float dt)
 {
-    Input();
-    for (int i = objectArray.size() - 1; i >= 0; --i)
-    {
-        objectArray[i]->Update(dt);
-    }
 
-    for (int i = objectArray.size() - 1; i >= 0; --i)
+    SDL_Delay((int)dt);
+    Input();
+
+    for (unsigned int i = 0; i < objectArray.size(); i++)
     {
         if (objectArray[i]->IsDead())
         {
             objectArray.erase(objectArray.begin() + i);
+            i--;
         }
     }
 }
 
 void State::Render()
 {
-    for (int i = objectArray.size() - 1; i >= 0; --i)
+    for (int i = 0; i < objectArray.size(); i++)
     {
         objectArray[i]->Render();
     }
@@ -122,10 +122,10 @@ void State::Render()
 void State::AddObject(int x, int y)
 {
     GameObject *go = new GameObject();
-    Sprite *enemy = new Sprite("assets/img/penguinface.png", *go);
+    Sprite *enemy = new Sprite("../public/img/penguinface.png", *go);
     go->box = {x, y, enemy->GetWidth(), enemy->GetHeight()};
     go->AddComponent(enemy);
     go->AddComponent(new Face(*go));
-    go->AddComponent(new Sound(*go, "assets/audio/boom.wav"));
+    go->AddComponent(new Sound(*go, "../public/audio/boom.wav"));
     objectArray.emplace_back(go);
 }

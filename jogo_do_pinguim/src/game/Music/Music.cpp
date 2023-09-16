@@ -56,7 +56,7 @@ void Music::Open(string file)
     }
 }
 
-bool Music::IsOpen() const
+bool Music::IsOpen()
 {
     return music != nullptr;
 }
