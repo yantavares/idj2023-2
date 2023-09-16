@@ -13,11 +13,11 @@ State::State()
 void State::LoadAssets()
 {
     GameObject *background = new GameObject();
-    Sprite *bg = new Sprite("../public/assets/img/ocean.jpg", *background);
+    Sprite *bg = new Sprite("../public/img/ocean.jpg", *background);
     background->box = {0, 0, bg->GetWidth(), bg->GetHeight()};
     objectArray.emplace_back(background);
 
-    music = new Music("../public/assets/audio/stageState.ogg");
+    music = new Music("../public/audio/stageState.ogg");
     music->Play();
 }
 
