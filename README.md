@@ -39,21 +39,14 @@ Ele gerará um executável `game` (Linux ou Mac) ou `game.exe` (Windows) na past
 
 ## Alternativa 3
 
-TODO add new commands
-
 Compile os arquivos pelo terminal
 
 No Linux,
 
 ```bash
-$ cd src
+$ cd jogo_do_pinguim/bin && ./game 
 ```
 
-```bash
-$ g++ Main.cpp Game.cpp State.cpp Sprite.cpp Music.cpp -w -lSDL2 -lSDL2_mixer -lSDL2_image -o game
-```
-
-Depois apenas execute o arquivo `game` gerado.
 
 ## Alternativa 4 ( O famoso "Confia!")
 
