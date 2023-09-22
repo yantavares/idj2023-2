@@ -18,8 +18,8 @@ void State::LoadAssets()
     Sprite *bg = new Sprite("../public/img/ocean.jpg", *background);
     background->box = {0, 0, bg->GetWidth(), bg->GetHeight()};
     background->AddComponent(bg);
-    TileSet *tileSet = new TileSet(*background, 64, 64, "assets/img/tileset.png");
-    TileMap *tileMap = new TileMap(*background, "assets/map/tileMap.txt", tileSet);
+    TileSet *tileSet = new TileSet(*background, 64, 64, "../public/img/tileset.png");
+    TileMap *tileMap = new TileMap(*background, "../public/map/tileMap.txt", tileSet);
     background->AddComponent(tileMap);
 
     objectArray.emplace_back(background);
