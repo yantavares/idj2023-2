@@ -30,6 +30,8 @@ private:
     int width;
     int height;
     SDL_Rect clipRect;
+
+    string file;
 };
 
 #endif

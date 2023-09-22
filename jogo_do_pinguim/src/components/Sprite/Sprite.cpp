@@ -1,5 +1,6 @@
 #include "Sprite.hpp"
 #include "../../game/Game/Game.hpp"
+#include "../Resources/Resources.hpp"
 
 Sprite::Sprite(GameObject &associated) : Component(associated)
 {
@@ -15,25 +16,29 @@ Sprite::Sprite(string file, GameObject &associated) : Component(associated)
 
 Sprite::~Sprite()
 {
-    if (texture != nullptr)
-    {
-        SDL_DestroyTexture(texture);
-    }
+    /*     if (texture != nullptr)
+        {
+            SDL_DestroyTexture(texture);
+        } */
 }
 
 void Sprite::Open(string file)
 {
-    if (texture != nullptr)
-    {
-        SDL_DestroyTexture(texture);
-    }
-    texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
-    if (texture == nullptr)
-    {
-        cerr << "Failed to load texture: " << SDL_GetError() << endl;
-        return;
-    }
+    /*     if (texture != nullptr)
+        {
+            SDL_DestroyTexture(texture);
+        }
+        texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
+        if (texture == nullptr)
+        {
+            cerr << "Failed to load texture: " << SDL_GetError() << endl;
+            return;
+        }
+        SDL_QueryTexture(texture, nullptr, nullptr, &width, &height); */
+
+    texture = Resources::GetImage(file);
     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+    this->file = file;
 }
 
 void Sprite::SetClip(int x, int y, int w, int h)
