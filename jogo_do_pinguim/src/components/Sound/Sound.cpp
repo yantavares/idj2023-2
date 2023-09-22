@@ -36,6 +36,11 @@ void Sound::Open(std::string file)
     chunk = Mix_LoadWAV(file.c_str());
 }
 
+bool Sound::IsOpen()
+{
+    return chunk != nullptr;
+}
+
 void Sound::Update(float dt)
 {
 }

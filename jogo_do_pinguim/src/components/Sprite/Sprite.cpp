@@ -54,6 +54,16 @@ void Sprite::Render()
     SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect);
 }
 
+void Sprite::Render(float x, float y, float w, float h)
+{
+    SDL_Rect dstRect;
+    dstRect.x = x;
+    dstRect.y = y;
+    dstRect.h = h;
+    dstRect.w = w;
+    SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect);
+}
+
 int Sprite::GetWidth()
 {
     return clipRect.w;

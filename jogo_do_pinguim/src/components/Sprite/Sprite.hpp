@@ -18,6 +18,7 @@ public:
     void Open(string file);
     void SetClip(int x, int y, int w, int h);
     void Render();
+    void Render(float x, float y, float w, float h);
     int GetWidth();
     int GetHeight();
     bool IsOpen();
