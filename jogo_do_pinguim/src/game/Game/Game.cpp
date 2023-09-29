@@ -94,6 +94,7 @@ SDL_Renderer *Game::GetRenderer()
 
 void Game::Run()
 {
+
     state = new State();
     while (!state->QuitRequested())
     {
