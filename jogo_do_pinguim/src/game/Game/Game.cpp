@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "../InputManager/InputManager.hpp"
 
 Game *Game::instance = nullptr;
 
