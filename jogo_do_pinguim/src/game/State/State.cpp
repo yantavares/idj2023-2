@@ -123,8 +123,10 @@ void State::Update(float dt)
 
     for (unsigned int i = 0; i < objectArray.size(); i++)
     {
+
         if (objectArray[i]->IsDead())
         {
+
             objectArray.erase(objectArray.begin() + i);
             i--;
         }

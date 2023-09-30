@@ -14,11 +14,7 @@ void Face::Damage(int damage)
     hitpoints -= damage;
     if (hitpoints <= 0)
     {
-        // Deleting sprite doesnt work for some reason...
-        associated.RemoveComponentType("Sprite");
-
-        SDL_Delay(100);
-
+        cout << "x_x" << endl;
         Sound *sound = (Sound *)associated.GetComponent("Sound");
         if (sound != nullptr)
         {
@@ -41,16 +37,11 @@ void Face::Update(float dt)
         int mouseY = input.GetMouseY();
 
         if (mouseX >= associated.box.x && mouseX < associated.box.x + associated.box.w &&
-            mouseY >= associated.box.y && mouseY < associated.box.y + associated.box.h)
+            mouseY >= associated.box.y && mouseY < associated.box.y + associated.box.h && hitpoints > 0)
         {
+            cout << "Ouch" << endl;
 
-            int randomDamage = rand() % 10 + 1; // Damage 1-10.
-            hitpoints -= randomDamage;
-
-            if (hitpoints < 0)
-            {
-                hitpoints = 0;
-            }
+            Damage(rand() % 10 + 1); // Damage 1-10
         }
     }
 }
