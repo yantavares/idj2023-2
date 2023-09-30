@@ -128,6 +128,10 @@ void State::Update(float dt)
             objectArray.erase(objectArray.begin() + i);
             i--;
         }
+        else
+        {
+            objectArray[i]->Update(dt);
+        }
     }
 }
 

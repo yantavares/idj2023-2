@@ -28,16 +28,12 @@ void InputManager::Update()
 {
     SDL_Event event;
 
-    // Coordenadas do mouse
     SDL_GetMouseState(&mouseX, &mouseY);
 
-    // Resetar a flag de quit
     quitRequested = false;
 
-    // Contador de updates
     updateCounter++;
 
-    // Processamento de eventos
     while (SDL_PollEvent(&event))
     {
         switch (event.type)
