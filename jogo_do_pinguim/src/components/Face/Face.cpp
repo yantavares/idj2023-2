@@ -37,8 +37,8 @@ void Face::Update(float dt)
         int mouseX = input.GetMouseX() + Camera::pos.x;
         int mouseY = input.GetMouseY() + Camera::pos.y;
 
-        if (mouseX >= associated.box.x && mouseX < associated.box.x + associated.box.w &&
-            mouseY >= associated.box.y && mouseY < associated.box.y + associated.box.h && hitpoints > 0)
+        if (mouseX >= associated.box.x + Camera::pos.x && mouseX < associated.box.x + Camera::pos.x + associated.box.w &&
+            mouseY >= associated.box.y + Camera::pos.y && mouseY < associated.box.y + Camera::pos.y + associated.box.h && hitpoints > 0)
         {
             cout << "Ouch" << endl;
 

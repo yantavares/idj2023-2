@@ -118,9 +118,8 @@ void State::Update(float dt)
 
     if (input.KeyPress(SDLK_SPACE))
     {
-        int mouseX, mouseY;
-        SDL_GetMouseState(&mouseX, &mouseY);
-        Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(mouseX, mouseY);
+
+        Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(input.GetMouseX() + Camera::pos.x, input.GetMouseY() + Camera::pos.y);
         AddObject((int)objPos.x, (int)objPos.y);
     }
 
