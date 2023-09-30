@@ -5,6 +5,7 @@
 #include "../../components/Sound/Sound.hpp"
 #include "../../components/TileMap/TileMap.hpp"
 #include "../../components/TileSet/TileSet.hpp"
+#include "../InputManager/InputManager.hpp"
 
 State::State()
 {
@@ -103,9 +104,22 @@ void State::Input()
 
 void State::Update(float dt)
 {
-
     SDL_Delay((int)dt);
-    Input();
+
+    InputManager &input = InputManager::GetInstance();
+
+    if (input.KeyPress(ESCAPE_KEY) || input.QuitRequested())
+    {
+        quitRequested = true;
+    }
+
+    if (input.KeyPress(SDLK_SPACE))
+    {
+        int mouseX, mouseY;
+        SDL_GetMouseState(&mouseX, &mouseY);
+        Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(mouseX, mouseY);
+        AddObject((int)objPos.x, (int)objPos.y);
+    }
 
     for (unsigned int i = 0; i < objectArray.size(); i++)
     {
