@@ -1,6 +1,7 @@
 #include "Sprite.hpp"
 #include "../../game/Game/Game.hpp"
 #include "../Resources/Resources.hpp"
+#include "../../game/Camera/Camera.hpp"
 
 Sprite::Sprite(GameObject &associated) : Component(associated)
 {
@@ -52,8 +53,8 @@ void Sprite::SetClip(int x, int y, int w, int h)
 void Sprite::Render()
 {
     SDL_Rect dstRect;
-    dstRect.x = associated.box.x;
-    dstRect.y = associated.box.y;
+    dstRect.x = associated.box.x - Camera::pos.x;
+    dstRect.y = associated.box.y - Camera::pos.y;
     dstRect.h = height;
     dstRect.w = width;
     SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect);

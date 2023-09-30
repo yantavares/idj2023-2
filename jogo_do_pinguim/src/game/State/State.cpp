@@ -153,7 +153,9 @@ void State::AddObject(int x, int y)
 {
     GameObject *go = new GameObject();
     Sprite *enemy = new Sprite("../public/img/penguinface.png", *go);
-    go->box = {x + Camera::pos.x, y + Camera::pos.y, enemy->GetWidth(), enemy->GetHeight()};
+
+    go->box = {x, y, enemy->GetWidth(), enemy->GetHeight()};
+
     go->AddComponent(enemy);
     go->AddComponent(new Face(*go));
     go->AddComponent(new Sound(*go, "../public/audio/boom.wav"));
