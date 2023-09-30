@@ -25,6 +25,11 @@ private:
     SDL_Window *window;
     SDL_Renderer *renderer;
     State *state;
+
+    int frameStart;
+    float dt;
+    void CalculateDeltaTime();
+    float GetDeltaTime();
 };
 
 #endif

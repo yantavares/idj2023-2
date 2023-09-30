@@ -54,6 +54,9 @@ Game::Game(string title, int width, int height)
     }
 
     state = new State();
+
+    frameStart = 0;
+    dt = 0.0f;
 }
 
 Game &Game::GetInstance()
@@ -92,15 +95,28 @@ SDL_Renderer *Game::GetRenderer()
     return renderer;
 }
 
+void Game::CalculateDeltaTime()
+{
+    Uint32 currentFrameTime = SDL_GetTicks();
+    dt = (currentFrameTime - frameStart) / 1000.0f; // Convert milliseconds to seconds
+    frameStart = currentFrameTime;
+}
+
+float Game::GetDeltaTime()
+{
+    return dt;
+}
+
 void Game::Run()
 {
     InputManager &input = InputManager::GetInstance();
     state = new State();
     while (!state->QuitRequested())
     {
+        CalculateDeltaTime();
         state->Render();
         SDL_RenderPresent(Game::GetInstance().GetRenderer());
         input.Update();
-        state->Update(33);
+        state->Update(GetDeltaTime());
     }
 }
