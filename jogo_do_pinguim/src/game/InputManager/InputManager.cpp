@@ -20,6 +20,10 @@ InputManager::InputManager()
     mouseY = 0;
 }
 
+InputManager::~InputManager()
+{
+}
+
 void InputManager::Update()
 {
     SDL_Event event;
