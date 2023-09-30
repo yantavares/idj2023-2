@@ -3,6 +3,7 @@
 #include "../Sound/Sound.hpp"
 #include "../../game/Game/Game.hpp"
 #include "../../game/InputManager/InputManager.hpp"
+#include "../../game/Camera/Camera.hpp"
 
 Face::Face(GameObject &associated) : Component(associated)
 {
@@ -33,8 +34,8 @@ void Face::Update(float dt)
 
     if (input.MousePress(LEFT_MOUSE_BUTTON))
     {
-        int mouseX = input.GetMouseX();
-        int mouseY = input.GetMouseY();
+        int mouseX = input.GetMouseX() + Camera::pos.x;
+        int mouseY = input.GetMouseY() + Camera::pos.y;
 
         if (mouseX >= associated.box.x && mouseX < associated.box.x + associated.box.w &&
             mouseY >= associated.box.y && mouseY < associated.box.y + associated.box.h && hitpoints > 0)

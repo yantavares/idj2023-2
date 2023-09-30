@@ -59,12 +59,24 @@ Game::Game(string title, int width, int height)
     dt = 0.0f;
 }
 
+int Game::GetWidth()
+{
+    return width;
+}
+
+int Game::GetHeight()
+{
+    return height;
+}
+
 Game &Game::GetInstance()
 {
 
     if (instance == nullptr)
     {
         instance = new Game("Yan Tavares, 202041323 :)", 1024, 600);
+        instance->width = 1024;
+        instance->height = 600;
     }
     return *instance;
 }

@@ -19,6 +19,8 @@ public:
     SDL_Renderer *GetRenderer();
     State &GetState();
     static Game &GetInstance();
+    int GetWidth();
+    int GetHeight();
 
 private:
     static Game *instance;
@@ -30,6 +32,9 @@ private:
     float dt;
     void CalculateDeltaTime();
     float GetDeltaTime();
+
+    int width;
+    int height;
 };
 
 #endif

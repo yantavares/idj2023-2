@@ -1,4 +1,5 @@
 #include "TileMap.hpp"
+#include "../../game/Camera/Camera.hpp"
 
 TileMap::TileMap(GameObject &associated, string file, TileSet *tileSet) : Component(associated)
 {
@@ -46,20 +47,23 @@ int &TileMap::At(int x, int y, int z)
 
 void TileMap::Render()
 {
-    for (int i = 0; i < mapDepth; i++)
+    for (int layer = 0; layer < mapDepth; layer++)
     {
-        // cout << "Rendering layer: " << i << endl;
-        RenderLayer(i);
+        RenderLayer(layer, Camera::pos.x, Camera::pos.y);
     }
 }
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY)
 {
-    for (int i = 0; i < mapHeight; i++)
+    for (int y = 0; y < mapHeight; y++)
     {
-        for (int j = 0; j < mapWidth; j++)
+        for (int x = 0; x < mapWidth; x++)
         {
-            tileSet->RenderTile(At(j, i, layer), j * tileSet->GetTileWidth(), i * tileSet->GetTileHeight());
+            int tileIndex = At(x, y, layer);
+            if (tileIndex >= 0)
+            {
+                tileSet->RenderTile(tileIndex, x * tileSet->GetTileWidth() - cameraX, y * tileSet->GetTileHeight() - cameraY);
+            }
         }
     }
 }

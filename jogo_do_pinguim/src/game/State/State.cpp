@@ -6,6 +6,7 @@
 #include "../../components/TileMap/TileMap.hpp"
 #include "../../components/TileSet/TileSet.hpp"
 #include "../InputManager/InputManager.hpp"
+#include "../Camera/Camera.hpp"
 
 State::State()
 {
@@ -19,8 +20,10 @@ void State::LoadAssets()
     Sprite *bg = new Sprite("../public/img/ocean.jpg", *background);
     background->box = {0, 0, bg->GetWidth(), bg->GetHeight()};
     background->AddComponent(bg);
+
     TileSet *tileSet = new TileSet(*background, 64, 64, "../public/img/tileset.png");
     TileMap *tileMap = new TileMap(*background, "../public/map/tileMap.txt", tileSet);
+
     background->AddComponent(tileMap);
 
     objectArray.emplace_back(background);
@@ -135,6 +138,8 @@ void State::Update(float dt)
             objectArray[i]->Update(dt);
         }
     }
+    // Uptades Camera
+    Camera::Update(dt);
 }
 
 void State::Render()
@@ -149,7 +154,7 @@ void State::AddObject(int x, int y)
 {
     GameObject *go = new GameObject();
     Sprite *enemy = new Sprite("../public/img/penguinface.png", *go);
-    go->box = {x, y, enemy->GetWidth(), enemy->GetHeight()};
+    go->box = {x + Camera::pos.x, y + Camera::pos.y, enemy->GetWidth(), enemy->GetHeight()};
     go->AddComponent(enemy);
     go->AddComponent(new Face(*go));
     go->AddComponent(new Sound(*go, "../public/audio/boom.wav"));
