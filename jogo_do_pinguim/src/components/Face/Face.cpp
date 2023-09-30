@@ -2,6 +2,7 @@
 #include "../Sprite/Sprite.hpp"
 #include "../Sound/Sound.hpp"
 #include "../../game/Game/Game.hpp"
+#include "../../game/InputManager/InputManager.hpp"
 
 Face::Face(GameObject &associated) : Component(associated)
 {
@@ -32,6 +33,26 @@ void Face::Damage(int damage)
 
 void Face::Update(float dt)
 {
+    InputManager &input = InputManager::GetInstance();
+
+    if (input.MousePress(LEFT_MOUSE_BUTTON))
+    {
+        int mouseX = input.GetMouseX();
+        int mouseY = input.GetMouseY();
+
+        if (mouseX >= associated.box.x && mouseX < associated.box.x + associated.box.w &&
+            mouseY >= associated.box.y && mouseY < associated.box.y + associated.box.h)
+        {
+
+            int randomDamage = rand() % 10 + 1; // Damage 1-10.
+            hitpoints -= randomDamage;
+
+            if (hitpoints < 0)
+            {
+                hitpoints = 0;
+            }
+        }
+    }
 }
 
 Face::~Face()
