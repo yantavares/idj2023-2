@@ -5,25 +5,25 @@ unordered_map<string, SDL_Texture *> Resources::imageTable;
 unordered_map<string, Mix_Music *> Resources::musicTable;
 unordered_map<string, Mix_Chunk *> Resources::soundTable;
 
-SDL_Texture *Resources::GetImage(string file)
+SDL_Texture *Resources::GetImage(string filepath)
 {
-    unordered_map<string, SDL_Texture *>::const_iterator achou = imageTable.find(file);
-    if (achou == imageTable.end())
+    auto found = imageTable.find(filepath);
+    if (found == imageTable.end())
     {
-        SDL_Texture *texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
-        if (texture == nullptr)
+        SDL_Texture *texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), filepath.c_str());
+        if (!texture)
         {
-            cerr << SDL_GetError();
-            exit(-1);
+            throw runtime_error(SDL_GetError());
         }
-        imageTable.emplace(file, texture);
+        imageTable[filepath] = texture;
         return texture;
     }
-    return achou->second;
+    return found->second;
 }
 
 void Resources::ClearImages()
 {
+
     for (auto &a : imageTable)
     {
         SDL_DestroyTexture(a.second);
@@ -31,21 +31,20 @@ void Resources::ClearImages()
     imageTable.clear();
 }
 
-Mix_Music *Resources::GetMusic(string file)
+Mix_Music *Resources::GetMusic(string filepath)
 {
-    unordered_map<string, Mix_Music *>::const_iterator achou = musicTable.find(file);
-    if (achou == musicTable.end())
+    auto found = musicTable.find(filepath);
+    if (found == musicTable.end())
     {
-        Mix_Music *music = Mix_LoadMUS(file.c_str());
-        if (music == nullptr)
+        Mix_Music *music = Mix_LoadMUS(filepath.c_str());
+        if (!music)
         {
-            cerr << Mix_GetError();
-            exit(-1);
+            throw runtime_error(Mix_GetError());
         }
-        musicTable.emplace(file, music);
+        musicTable[filepath] = music;
         return music;
     }
-    return achou->second;
+    return found->second;
 }
 
 void Resources::ClearMusics()
@@ -57,21 +56,20 @@ void Resources::ClearMusics()
     musicTable.clear();
 }
 
-Mix_Chunk *Resources::GetSound(string file)
+Mix_Chunk *Resources::GetSound(string filepath)
 {
-    unordered_map<string, Mix_Chunk *>::const_iterator achou = soundTable.find(file);
-    if (achou == soundTable.end())
+    auto found = soundTable.find(filepath);
+    if (found == soundTable.end())
     {
-        Mix_Chunk *chunk = Mix_LoadWAV(file.c_str());
-        if (chunk == nullptr)
+        Mix_Chunk *sound = Mix_LoadWAV(filepath.c_str());
+        if (!sound)
         {
-            cerr << Mix_GetError();
-            exit(-1);
+            throw runtime_error(Mix_GetError());
         }
-        soundTable.emplace(file, chunk);
-        return chunk;
+        soundTable[filepath] = sound;
+        return sound;
     }
-    return achou->second;
+    return found->second;
 }
 
 void Resources::ClearSounds()

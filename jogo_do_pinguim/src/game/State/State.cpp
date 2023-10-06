@@ -11,9 +11,11 @@
 
 State::State()
 {
+    music = nullptr;
     quitRequested = false;
-    LoadAssets();
     started = false;
+
+    LoadAssets();
 }
 
 void State::LoadAssets()
@@ -63,13 +65,6 @@ void State::Update(float dt)
         quitRequested = true;
     }
 
-    if (input.KeyPress(SDLK_SPACE))
-    {
-
-        Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) + Vec2(input.GetMouseX() + Camera::pos.x, input.GetMouseY() + Camera::pos.y);
-        AddObject((int)objPos.x, (int)objPos.y);
-    }
-
     for (unsigned int i = 0; i < objectArray.size(); i++)
     {
 
@@ -85,7 +80,7 @@ void State::Update(float dt)
         }
     }
     // Uptades Camera
-    Camera::Update(dt);
+    Camera::Update(dt * 1000);
 }
 
 void State::Render()
@@ -94,18 +89,6 @@ void State::Render()
     {
         objectArray[i]->Render();
     }
-}
-
-void State::AddObject(int x, int y)
-{
-    GameObject *go = new GameObject();
-    Sprite *enemy = new Sprite("../public/img/penguinface.png", *go);
-
-    go->box = {x, y, enemy->GetWidth(), enemy->GetHeight()};
-
-    go->AddComponent(enemy);
-    go->AddComponent(new Sound(*go, "../public/audio/boom.wav"));
-    objectArray.emplace_back(go);
 }
 
 void State::Start()

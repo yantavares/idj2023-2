@@ -33,7 +33,6 @@ private:
     bool quitRequested;
 
     void Input();
-    void AddObject(int mouseX, int mouseY);
 
     bool started;
     vector<shared_ptr<GameObject>> objectArray;

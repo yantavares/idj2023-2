@@ -6,6 +6,7 @@
 Sprite::Sprite(GameObject &associated) : Component(associated)
 {
     texture = nullptr;
+    scale = Vec2(1, 1);
 }
 
 Sprite::Sprite(string file, GameObject &associated) : Component(associated)
@@ -13,6 +14,7 @@ Sprite::Sprite(string file, GameObject &associated) : Component(associated)
     texture = nullptr;
     Open(file);
     SetClip(0, 0, width, height);
+    scale = Vec2(1, 1);
 }
 
 Sprite::~Sprite()
