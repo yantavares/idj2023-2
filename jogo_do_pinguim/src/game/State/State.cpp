@@ -8,6 +8,7 @@
 #include "../Camera/Camera.hpp"
 #include "../../components/CameraFollower/CameraFollower.hpp"
 #include "../../components/Alien/Alien.hpp"
+#include "../../components/Resources/Resources.hpp"
 
 State::State()
 {
@@ -47,6 +48,9 @@ bool State::QuitRequested()
 
 State::~State()
 {
+    Resources::ClearImages();
+    Resources::ClearMusics();
+    Resources::ClearSounds();
     objectArray.clear();
 }
 
@@ -63,11 +67,11 @@ void State::Update(float dt)
     {
         quitRequested = true;
     }
-    for (auto &object : objectArray)
+    for (int i = 0; i < objectArray.size(); i++)
     {
-        object->Update(dt);
+        objectArray[i]->Update(dt);
     }
-    for (unsigned int i = 0; i < objectArray.size(); i++)
+    for (int i = 0; i < objectArray.size(); i++)
     {
         if (objectArray[i]->IsDead())
         {
