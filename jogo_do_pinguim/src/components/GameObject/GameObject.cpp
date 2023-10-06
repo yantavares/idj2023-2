@@ -82,3 +82,24 @@ void GameObject::RemoveComponentType(string type)
         }
     }
 }
+
+GameObject::GameObject() : started(false) {}
+
+void GameObject::Start()
+{
+    for (auto &comp : components)
+    {
+        comp->Start();
+    }
+    started = true;
+}
+
+void GameObject::AddComponent(Component *comp)
+{
+    shared_ptr<Component> sharedComp(comp);
+    components.push_back(sharedComp);
+    if (started)
+    {
+        comp->Start();
+    }
+}

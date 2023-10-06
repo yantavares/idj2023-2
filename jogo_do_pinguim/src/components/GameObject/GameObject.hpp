@@ -26,6 +26,9 @@ public:
     void RemoveComponentType(string type);
     Component *GetComponent(string type);
 
+    void Start();
+    bool started;
+
     Rect box;
 
 private:

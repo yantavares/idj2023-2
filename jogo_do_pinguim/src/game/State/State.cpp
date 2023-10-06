@@ -165,3 +165,38 @@ void State::AddObject(int x, int y)
     go->AddComponent(new Sound(*go, "../public/audio/boom.wav"));
     objectArray.emplace_back(go);
 }
+
+State::State() : started(false) {}
+
+void State::Start()
+{
+    LoadAssets();
+    for (auto &obj : objectArray)
+    {
+        obj->Start();
+    }
+    started = true;
+}
+
+std::weak_ptr<GameObject> State::AddObject(GameObject *go)
+{
+    std::shared_ptr<GameObject> sharedGo(go);
+    objectArray.push_back(sharedGo);
+    if (started)
+    {
+        go->Start();
+    }
+    return std::weak_ptr<GameObject>(sharedGo);
+}
+
+std::weak_ptr<GameObject> State::GetObjectPtr(GameObject *go)
+{
+    for (auto &obj : objectArray)
+    {
+        if (obj.get() == go)
+        {
+            return std::weak_ptr<GameObject>(obj);
+        }
+    }
+    return std::weak_ptr<GameObject>(); // Retorna um weak_ptr vazio se não encontrar.
+}

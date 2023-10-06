@@ -23,6 +23,11 @@ public:
     void Update(float dt);
     void Render();
 
+    void Start();
+
+    weak_ptr<GameObject> AddObject(GameObject *go);
+    weak_ptr<GameObject> GetObjectPtr(GameObject *go);
+
 private:
     Music *music;
     bool quitRequested;
@@ -30,6 +35,9 @@ private:
 
     void Input();
     void AddObject(int mouseX, int mouseY);
+
+    bool started;
+    vector<shared_ptr<GameObject>> objectArray;
 };
 
 #endif

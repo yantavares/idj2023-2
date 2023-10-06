@@ -123,6 +123,7 @@ void Game::Run()
 {
     InputManager &input = InputManager::GetInstance();
     state = new State();
+    state->Start();
     while (!state->QuitRequested())
     {
         CalculateDeltaTime();
