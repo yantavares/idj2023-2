@@ -7,11 +7,13 @@
 #include "../InputManager/InputManager.hpp"
 #include "../Camera/Camera.hpp"
 #include "../../components/CameraFollower/CameraFollower.hpp"
+#include "../../components/Alien/Alien.hpp"
 
 State::State()
 {
     quitRequested = false;
     LoadAssets();
+    started = false;
 }
 
 void State::LoadAssets()
@@ -23,6 +25,11 @@ void State::LoadAssets()
 
     CameraFollower *cameraFollower = new CameraFollower(*background);
     background->AddComponent(cameraFollower);
+
+    GameObject *alien = new GameObject();
+    alien->AddComponent(new Alien(*alien, 3));
+
+    objectArray.emplace_back(alien);
 
     TileSet *tileSet = new TileSet(*background, 64, 64, "../public/img/tileset.png");
     TileMap *tileMap = new TileMap(*background, "../public/map/tileMap.txt", tileSet);
