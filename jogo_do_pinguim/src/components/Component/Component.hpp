@@ -20,6 +20,8 @@ public:
     virtual void Render() = 0;
     virtual bool Is(string type) = 0;
 
+    GameObject &GetAssociated() { return associated; }
+
     virtual void Start();
 };
 

@@ -24,12 +24,14 @@ public:
     bool IsOpen();
     void Update(float dt);
     bool Is(string type);
+    void SetScale(float scaleX, float scaleY);
 
 private:
     SDL_Texture *texture;
     int width;
     int height;
     SDL_Rect clipRect;
+    Vec2 scale;
 
     string file;
 };

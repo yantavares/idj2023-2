@@ -3,6 +3,8 @@
 GameObject::GameObject()
 {
     this->isDead = false;
+    this->started = false;
+    angle = 0;
 }
 
 GameObject::~GameObject()

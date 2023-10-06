@@ -93,3 +93,12 @@ bool Sprite::Is(string type)
 {
     return type == "Sprite" ? true : false;
 }
+
+void Sprite::SetScale(float scaleX, float scaleY)
+{
+    scale = Vec2(scaleX, scaleY);
+    Vec2 center = associated.box.GetCenteredVec2();
+    associated.box.x *= scale.x;
+    associated.box.y *= scale.y;
+    associated.box.SetCenter(center);
+}

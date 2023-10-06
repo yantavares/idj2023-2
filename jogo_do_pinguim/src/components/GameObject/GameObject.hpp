@@ -31,6 +31,8 @@ public:
 
     Rect box;
 
+    double angle;
+
 private:
     // Needs to be shared to work!
     vector<shared_ptr<Component>> components;

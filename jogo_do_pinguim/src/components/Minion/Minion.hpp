@@ -6,11 +6,11 @@
 class Minion : public Component
 {
 private:
-	GameObject &alienCenter;
+	GameObject &alien;
 	float arc;
 
 public:
-	Minion(GameObject &associated, GameObject &alienCenter, float arcOffsetDeg = 0);
+	Minion(GameObject &associated, GameObject &alien, float arcOffsetDeg = 0);
 	void Update(float dt);
 	void Render();
 	bool Is(string type);

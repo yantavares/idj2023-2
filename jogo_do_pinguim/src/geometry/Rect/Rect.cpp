@@ -25,3 +25,20 @@ bool Rect::Contains(Vec2 b)
 {
     return b.x >= this->x && b.x <= this->x + w && b.y >= this->y && b.y <= this->y + h;
 }
+
+void Rect::SetCenter(Vec2 v)
+{
+    this->x = v.x - w / 2;
+    this->y = v.y - h / 2;
+}
+
+void Rect::SetCenter(float x, float y)
+{
+    this->x = x - w / 2;
+    this->y = y - h / 2;
+}
+
+Vec2 Rect::GetCenteredVec2()
+{
+    return Vec2(x + w / 2, y + h / 2);
+}

@@ -14,6 +14,12 @@ public:
     Vec2(float x, float y);
     Vec2 GetRotated(float rad);
     Vec2 operator+(Vec2 b);
+    Vec2 operator-(Vec2 b);
+    Vec2 operator*(float d);
+    void operator+=(Vec2 b);
+    float GetMagnitude();
+    float GetSlope();
+    Vec2 GetNormalized();
 };
 
 #endif
