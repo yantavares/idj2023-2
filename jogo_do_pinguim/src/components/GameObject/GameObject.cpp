@@ -4,7 +4,7 @@ GameObject::GameObject()
 {
     this->isDead = false;
     this->started = false;
-    angle = 0;
+    this->angle = 0;
 }
 
 GameObject::~GameObject()
@@ -67,19 +67,6 @@ Component *GameObject::GetComponent(string type)
     return nullptr;
 }
 
-void GameObject::RemoveComponentType(string type)
-{
-    for (unsigned int i = 0; i < components.size(); i++)
-    {
-        if (components[i]->Is(type))
-        {
-            cout << "Found" << endl;
-            components.erase(components.begin() + i);
-            break;
-        }
-    }
-}
-
 void GameObject::Start()
 {
     for (auto &comp : components)
@@ -91,10 +78,5 @@ void GameObject::Start()
 
 void GameObject::AddComponent(Component *comp)
 {
-    shared_ptr<Component> sharedComp(comp);
-    components.push_back(sharedComp);
-    if (started)
-    {
-        comp->Start();
-    }
+    components.emplace_back(comp);
 }

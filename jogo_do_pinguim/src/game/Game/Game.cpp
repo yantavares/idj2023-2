@@ -12,7 +12,7 @@ Game::Game(string title, int width, int height)
     }
     instance = this;
 
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) < 0)
     {
         cerr << "Error: Failed to initialize SDL: " << SDL_GetError() << endl;
         exit(1);

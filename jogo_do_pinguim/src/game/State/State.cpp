@@ -14,8 +14,6 @@ State::State()
     music = nullptr;
     quitRequested = false;
     started = false;
-
-    LoadAssets();
 }
 
 void State::LoadAssets()
@@ -80,7 +78,7 @@ void State::Update(float dt)
         }
     }
     // Uptades Camera
-    Camera::Update(dt * 1000);
+    Camera::Update(dt);
 }
 
 void State::Render()
@@ -101,25 +99,25 @@ void State::Start()
     started = true;
 }
 
-std::weak_ptr<GameObject> State::AddObject(GameObject *go)
+weak_ptr<GameObject> State::AddObject(GameObject *go)
 {
-    std::shared_ptr<GameObject> sharedGo(go);
+    shared_ptr<GameObject> sharedGo(go);
     objectArray.push_back(sharedGo);
-    if (started)
+    if (!sharedGo->started)
     {
-        go->Start();
+        sharedGo->Start();
     }
-    return std::weak_ptr<GameObject>(sharedGo);
+    return weak_ptr<GameObject>(sharedGo);
 }
 
-std::weak_ptr<GameObject> State::GetObjectPtr(GameObject *go)
+weak_ptr<GameObject> State::GetObjectPtr(GameObject *go)
 {
     for (auto &obj : objectArray)
     {
         if (obj.get() == go)
         {
-            return std::weak_ptr<GameObject>(obj);
+            return weak_ptr<GameObject>(obj);
         }
     }
-    return std::weak_ptr<GameObject>(); // Retorna um weak_ptr vazio se não encontrar.
+    return weak_ptr<GameObject>(); // Retorna um weak_ptr vazio se não encontrar.
 }
