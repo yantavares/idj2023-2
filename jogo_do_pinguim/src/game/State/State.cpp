@@ -23,20 +23,18 @@ void State::LoadAssets()
     background->box = {0, 0, bg->GetWidth(), bg->GetHeight()};
     background->AddComponent(bg);
 
+    TileSet *tileSet = new TileSet(*background, 64, 64, "../public/img/tileset.png");
+    TileMap *tileMap = new TileMap(*background, "../public/map/tileMap.txt", tileSet);
+    background->AddComponent(tileMap);
+
     CameraFollower *cameraFollower = new CameraFollower(*background);
     background->AddComponent(cameraFollower);
 
     GameObject *alien = new GameObject();
     alien->AddComponent(new Alien(*alien, 3));
 
-    objectArray.emplace_back(alien);
-
-    TileSet *tileSet = new TileSet(*background, 64, 64, "../public/img/tileset.png");
-    TileMap *tileMap = new TileMap(*background, "../public/map/tileMap.txt", tileSet);
-
-    background->AddComponent(tileMap);
-
     objectArray.emplace_back(background);
+    objectArray.emplace_back(alien);
 
     music = new Music("../public/audio/stageState.ogg");
     music->Play();
@@ -54,30 +52,29 @@ State::~State()
 
 void State::Update(float dt)
 {
-    SDL_Delay((int)dt);
+    quitRequested = false;
 
-    InputManager &input = InputManager::GetInstance();
-
-    if (input.KeyPress(ESCAPE_KEY) || input.QuitRequested())
+    if (InputManager::GetInstance().QuitRequested())
     {
         quitRequested = true;
     }
 
+    else if (InputManager::GetInstance().KeyPress(ESCAPE_KEY))
+    {
+        quitRequested = true;
+    }
+    for (auto &object : objectArray)
+    {
+        object->Update(dt);
+    }
     for (unsigned int i = 0; i < objectArray.size(); i++)
     {
-
         if (objectArray[i]->IsDead())
         {
-
             objectArray.erase(objectArray.begin() + i);
             i--;
         }
-        else
-        {
-            objectArray[i]->Update(dt);
-        }
     }
-    // Uptades Camera
     Camera::Update(dt);
 }
 
@@ -119,5 +116,5 @@ weak_ptr<GameObject> State::GetObjectPtr(GameObject *go)
             return weak_ptr<GameObject>(obj);
         }
     }
-    return weak_ptr<GameObject>(); // Retorna um weak_ptr vazio se não encontrar.
+    return weak_ptr<GameObject>();
 }
