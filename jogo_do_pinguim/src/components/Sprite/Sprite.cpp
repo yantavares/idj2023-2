@@ -55,8 +55,8 @@ void Sprite::Render()
     SDL_Rect dstRect;
     dstRect.x = associated.box.x - Camera::pos.x;
     dstRect.y = associated.box.y - Camera::pos.y;
-    dstRect.h = height;
-    dstRect.w = width;
+    dstRect.h = height * scale.y;
+    dstRect.w = width * scale.x;
     SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect, associated.angle, nullptr, SDL_FLIP_NONE);
 }
 
