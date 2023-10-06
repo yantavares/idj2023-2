@@ -109,9 +109,8 @@ SDL_Renderer *Game::GetRenderer()
 
 void Game::CalculateDeltaTime()
 {
-    Uint32 currentFrameTime = SDL_GetTicks();
-    dt = (currentFrameTime - frameStart) / 1000.0f; // Convert milliseconds to seconds
-    frameStart = currentFrameTime;
+    dt = (SDL_GetTicks() - frameStart);
+    frameStart = SDL_GetTicks();
 }
 
 float Game::GetDeltaTime()

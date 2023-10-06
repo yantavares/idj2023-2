@@ -20,43 +20,42 @@ void Camera::Unfollow()
 
 void Camera::Update(float dt)
 {
-    if (focus)
+    float speedamnt = 0.5;
+    bool flag[2] = {false, false};
+    if (focus != nullptr)
     {
-        // Center the camera on the focus object
-        pos.x = focus->box.x - Game::GetInstance().GetWidth() / 2 + focus->box.w / 2;
-        pos.y = focus->box.y - Game::GetInstance().GetHeight() / 2 + focus->box.h / 2;
+        pos = Vec2(focus->box.x + 1024 / 2 - focus->box.w / 2, focus->box.y + 600 / 2 - focus->box.h / 2);
     }
     else
     {
-        InputManager &input = InputManager::GetInstance();
-
-        if (input.IsKeyDown(LEFT_ARROW_KEY))
+        if (InputManager::GetInstance().IsKeyDown(LEFT_ARROW_KEY))
         {
-            speed.x = -SPEED_CONSTANT;
+            speed.x = -speedamnt;
+            flag[0] = true;
         }
-        else if (input.IsKeyDown(RIGHT_ARROW_KEY))
+        if (InputManager::GetInstance().IsKeyDown(RIGHT_ARROW_KEY))
         {
-            speed.x = SPEED_CONSTANT;
+            speed.x = speedamnt;
+            flag[0] = true;
         }
-        else
+        if (InputManager::GetInstance().IsKeyDown(UP_ARROW_KEY))
+        {
+            speed.y = -speedamnt;
+            flag[1] = true;
+        }
+        if (InputManager::GetInstance().IsKeyDown(DOWN_ARROW_KEY))
+        {
+            speed.y = speedamnt;
+            flag[1] = true;
+        }
+        if (!flag[0])
         {
             speed.x = 0;
         }
-
-        if (input.IsKeyDown(UP_ARROW_KEY))
-        {
-            speed.y = -SPEED_CONSTANT;
-        }
-        else if (input.IsKeyDown(DOWN_ARROW_KEY))
-        {
-            speed.y = SPEED_CONSTANT;
-        }
-        else
+        if (!flag[1])
         {
             speed.y = 0;
         }
-
-        pos.x += speed.x * dt;
-        pos.y += speed.y * dt;
+        pos += speed * dt;
     }
 }
