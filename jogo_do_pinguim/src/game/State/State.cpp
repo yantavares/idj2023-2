@@ -99,7 +99,7 @@ void State::Start()
 weak_ptr<GameObject> State::AddObject(GameObject *go)
 {
     shared_ptr<GameObject> sharedGo(go);
-    objectArray.push_back(sharedGo);
+    objectArray.emplace_back(sharedGo);
     if (!sharedGo->started)
     {
         sharedGo->Start();

@@ -2,8 +2,6 @@
 
 #include "Music.hpp"
 
-using namespace std;
-
 Music::Music()
 {
     music = nullptr;

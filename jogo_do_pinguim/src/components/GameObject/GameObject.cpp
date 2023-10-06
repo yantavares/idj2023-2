@@ -2,9 +2,9 @@
 
 GameObject::GameObject()
 {
-    this->isDead = false;
-    this->started = false;
-    this->angle = 0;
+    started = false;
+    isDead = false;
+    angle = 0;
 }
 
 GameObject::~GameObject()
@@ -13,22 +13,21 @@ GameObject::~GameObject()
     {
         components.erase(components.begin() + i);
     }
-    components.clear();
 }
 
 void GameObject::Update(float dt)
 {
-    for (auto it = components.begin(); it != components.end(); ++it)
+    for (unsigned int i = 0; i < components.size(); i++)
     {
-        (*it)->Update(dt);
+        components[i]->Update(dt);
     }
 }
 
 void GameObject::Render()
 {
-    for (auto it = components.begin(); it != components.end(); ++it)
+    for (unsigned int i = 0; i < components.size(); i++)
     {
-        (*it)->Render();
+        components[i]->Render();
     }
 }
 
@@ -73,7 +72,6 @@ void GameObject::Start()
     {
         comp->Start();
     }
-    started = true;
 }
 
 void GameObject::AddComponent(Component *comp)
