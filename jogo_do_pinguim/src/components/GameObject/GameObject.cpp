@@ -42,11 +42,6 @@ void GameObject::RequestDelete()
     isDead = true;
 }
 
-/* void GameObject::AddComponent(Component *cpt)
-{
-    components.emplace_back(cpt);
-} */
-
 void GameObject::RemoveComponent(Component *cpt)
 {
 
@@ -84,8 +79,6 @@ void GameObject::RemoveComponentType(string type)
         }
     }
 }
-
-GameObject::GameObject() : started(false) {}
 
 void GameObject::Start()
 {

@@ -6,7 +6,7 @@
 
 Alien::Alien(GameObject &associated, int minionCount) : Component(associated)
 {
-    Sprite *alienSprite = new Sprite("assets/img/alien.png", associated);
+    Sprite *alienSprite = new Sprite("../public/img/alien.png", associated);
     associated.box.h = alienSprite->GetHeight();
     associated.box.w = alienSprite->GetWidth();
     associated.box.SetCenter(512, 300);
@@ -26,7 +26,7 @@ void Alien::Start()
     for (int i = 0; i < nMinions; i++)
     {
         GameObject *minionObject = new GameObject();
-        Sprite *minionSprite = new Sprite("assets/img/minion.png", *minionObject);
+        Sprite *minionSprite = new Sprite("../public/img/minion.png", *minionObject);
         float scale = (rand() % 5 + 10) / 10.0;
         minionSprite->SetScale(scale, scale);
         minionObject->box.w = minionSprite->GetWidth();

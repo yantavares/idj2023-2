@@ -108,8 +108,6 @@ void State::AddObject(int x, int y)
     objectArray.emplace_back(go);
 }
 
-State::State() : started(false) {}
-
 void State::Start()
 {
     LoadAssets();
