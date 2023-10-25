@@ -19,6 +19,13 @@ PenguinBody::~PenguinBody()
     player = nullptr;
 }
 
+void PenguinBody::Render() {}
+
+bool PenguinBody::Is(string type)
+{
+    return type == "PenguinBody";
+}
+
 void PenguinBody::Start()
 {
     auto penguinPass = Game::GetInstance().GetState().GetObjectPtr(&associated);
@@ -36,10 +43,9 @@ void PenguinBody::Update(float dt)
 {
     InputManager &input = InputManager::GetInstance();
 
-    // Controlando movimento
     if (input.IsKeyDown('W'))
     {
-        linearSpeed += dt * CONST_ACCELERATION; // Supondo que CONST_ACCELERATION é uma constante definida para aceleração
+        linearSpeed += dt * CONST_ACCELERATION;
     }
     if (input.IsKeyDown('S'))
     {
@@ -66,7 +72,6 @@ void PenguinBody::Update(float dt)
 
     if (hp <= 0)
     {
-        // Solicitar deleção
         associated.RequestDelete();
         if (auto cannon = pcannon.lock())
         {
