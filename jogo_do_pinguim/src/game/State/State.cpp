@@ -12,6 +12,7 @@
 #include "../../components/PenguinBody/PenguinBody.hpp"
 #include "../../components/PenguinCannon/PenguinCannon.hpp"
 #include "../../components/Collider/Collider.hpp"
+#include "../Collision/Collision.hpp"
 
 State::State()
 {
@@ -27,15 +28,18 @@ void State::LoadAssets()
     background->box = {0, 0, bg->GetWidth(), bg->GetHeight()};
     background->AddComponent(bg);
 
-    TileSet *tileSet = new TileSet(*background, 64, 64, "../public/img/tileset.png");
-    TileMap *tileMap = new TileMap(*background, "../public/map/tileMap.txt", tileSet);
-    background->AddComponent(tileMap);
+    GameObject *tileMap = new GameObject();
+    TileSet *ts = new TileSet(*tileMap, 64, 64, "../public/img/tileset.png");
+    TileMap *tm = new TileMap(*tileMap, "../public/map/tileMap.txt", ts);
+    tileMap->AddComponent(tm);
+    objectArray.emplace_back(tileMap);
 
     CameraFollower *cameraFollower = new CameraFollower(*background);
     background->AddComponent(cameraFollower);
 
     GameObject *alien = new GameObject();
     alien->AddComponent(new Alien(*alien, 3));
+    alien->box.SetCenter(512, 300);
 
     GameObject *penguin = new GameObject();
     Sprite *penguinsprite = new Sprite("../public/img/penguin.png", *penguin);
@@ -46,8 +50,8 @@ void State::LoadAssets()
     penguin->AddComponent(new PenguinBody(*penguin));
 
     objectArray.emplace_back(penguin);
-    objectArray.emplace_back(background);
     objectArray.emplace_back(alien);
+    objectArray.emplace_back(background);
 
     music = new Music("../public/audio/stageState.ogg");
     music->Play();
@@ -93,7 +97,7 @@ void State::Update(float dt)
                 Collider *b = (Collider *)objectArray[j]->GetComponent("Collider");
                 if (b != nullptr)
                 {
-                    if (Collision::IsColliding(a->box, b->box, a->associated.angleDeg, b->associated.angleDeg))
+                    if (Collision::IsColliding(a->box, b->box, a->GetAssociated().angle, b->GetAssociated().angle))
                     {
                         objectArray[i]->NotifyCollision(*objectArray[j]);
                         objectArray[j]->NotifyCollision(*objectArray[i]);
@@ -115,9 +119,22 @@ void State::Update(float dt)
 
 void State::Render()
 {
-    for (int i = 0; i < objectArray.size(); i++)
+    TileMap *tm1;
+    TileMap *tm;
+    for (unsigned int i = 0; i < objectArray.size(); i++)
     {
-        objectArray[i]->Render();
+        tm1 = (TileMap *)objectArray[i]->GetComponent("TileMap");
+        if (tm1 != nullptr)
+        {
+            tm = tm1;
+            tm->RenderLayer(0, Camera::pos.x, Camera::pos.y);
+        }
+        else
+            objectArray[i]->Render();
+    }
+    if (tm != nullptr)
+    {
+        tm->RenderLayer(1, Camera::pos.x, Camera::pos.y);
     }
 }
 

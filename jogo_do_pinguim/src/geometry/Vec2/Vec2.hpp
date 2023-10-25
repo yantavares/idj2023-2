@@ -17,6 +17,7 @@ public:
     Vec2 operator-(Vec2 b);
     Vec2 operator*(float d);
     void operator+=(Vec2 b);
+    Vec2 operator/(float d);
     float GetMagnitude();
     float GetSlope();
     Vec2 GetNormalized();

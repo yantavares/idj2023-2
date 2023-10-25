@@ -38,6 +38,11 @@ void Vec2::operator+=(Vec2 b)
     y += b.y;
 }
 
+Vec2 Vec2::operator/(float d)
+{
+    return Vec2(x / d, y / d);
+}
+
 float Vec2::GetMagnitude()
 {
     return sqrt(x * x + y * y);
