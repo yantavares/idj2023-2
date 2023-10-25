@@ -4,11 +4,23 @@
 #include "../GameObject/GameObject.hpp"
 #include "../Minion/Minion.hpp"
 #include "../Sprite/Sprite.hpp"
+#include "../Timer/Timer.hpp"
 
 #include <queue>
 
 class Alien : public Component
 {
+public:
+	Alien(GameObject &associated, int nMinions);
+	~Alien();
+
+	void Start();
+	void Update(float dt);
+	void Render();
+	bool Is(string type);
+
+	static int alienCount;
+
 private:
 	class Action
 	{
@@ -24,20 +36,20 @@ private:
 		ActionType type;
 		Vec2 pos;
 	};
+	enum AlienState
+	{
+		MOVING,
+		RESTING
+	};
+	AlienState state;
 	Vec2 speed;
 	int hp;
 	int nMinions;
 	queue<Action> tasks;
 	vector<weak_ptr<GameObject>> minions;
 
-public:
-	Alien(GameObject &associated, int nMinions);
-	~Alien();
-
-	void Start();
-	void Update(float dt);
-	void Render();
-	bool Is(string type);
+	Timer restTimer;
+	Vec2 destination;
 };
 
 #endif

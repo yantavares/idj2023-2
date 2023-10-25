@@ -78,3 +78,24 @@ void GameObject::AddComponent(Component *comp)
 {
     components.emplace_back(comp);
 }
+
+void GameObject::NotifyCollision(GameObject &other)
+{
+    for (auto &component : components)
+    {
+        component->NotifyCollision(other);
+    }
+}
+
+void GameObject::RemoveComponent(string type)
+{
+    bool found = false;
+    for (unsigned int i = 0; i < components.size() && !found; i++)
+    {
+        if (components[i]->Is(type))
+        {
+            components.erase(components.begin() + i);
+            found = true;
+        }
+    }
+}

@@ -12,11 +12,13 @@ private:
 	int damage;
 
 public:
-	Bullet(GameObject &associated, float angle, float speed, int damage, float maxDistance, string sprite, int framcount = 1, float frameTime = 1);
+	Bullet(GameObject &associated, float angle, float speed, int damage, float maxDistance, string sprite, bool targetsPlayer, int framcount = 1, float frameTime = 1);
 	void Update(float dt);
 	void Render();
 	bool Is(string type);
 	int GetDamage();
+
+	bool targetsPlayer;
 };
 
 #endif

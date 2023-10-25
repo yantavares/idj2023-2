@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "../Component/Component.hpp"
+#include "../Timer/Timer.hpp"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ class Sprite : public Component
 {
 public:
     Sprite(GameObject &associated);
-    Sprite(string file, GameObject &associated, int frameCount = 1, float frameTime = 1);
+    Sprite(string file, GameObject &associated, int frameCount = 1, float frameTime = 1, float secondsToSelfDestruct = 0);
 
     ~Sprite();
     void Open(string file);
@@ -43,6 +44,9 @@ private:
     float frameTime;
     int currentFrame;
     float timeElapsed;
+
+    Timer selfDestructCount;
+    float secondsToSelfDestruct;
 };
 
 #endif

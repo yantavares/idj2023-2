@@ -2,7 +2,11 @@
 #include "../../game/Camera/Camera.hpp"
 #include "../../game/Game/Game.hpp"
 #include "../../game/InputManager/InputManager.hpp"
+#include "../PenguinBody/PenguinBody.hpp"
+#include "../Sound/Sound.hpp"
 #include <SDL2/SDL.h>
+
+int Alien::alienCount = 0;
 
 Alien::Alien(GameObject &associated, int minionCount) : Component(associated)
 {
@@ -14,11 +18,15 @@ Alien::Alien(GameObject &associated, int minionCount) : Component(associated)
     this->nMinions = minionCount;
     hp = 30;
     speed = Vec2(0, 0);
+
+    alienCount++;
+    state = RESTING;
 }
 
 Alien::~Alien()
 {
     minions.clear();
+    alienCount--;
 }
 
 void Alien::Start()
@@ -41,56 +49,69 @@ void Alien::Start()
 
 void Alien::Update(float dt)
 {
-    int mouseX = InputManager::GetInstance().GetMouseX() + Camera::pos.x;
-    int mouseY = InputManager::GetInstance().GetMouseY() + Camera::pos.y;
-
-    if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON))
-        tasks.push(Action(Action::ActionType::SHOOT, mouseX, mouseY));
-    else if (InputManager::GetInstance().MousePress(RIGHT_MOUSE_BUTTON))
-        tasks.push(Action(Action::ActionType::MOVE, mouseX, mouseY));
-
-    if (!tasks.empty())
+    if (state == RESTING)
     {
-        Action currentAction = tasks.front();
-        if (currentAction.type == Action::ActionType::MOVE)
+        restTimer.Update(dt);
+        if (restTimer.Get() > 5)
         {
-            float moveSpeed = 0.5;
-            Vec2 distance = currentAction.pos - associated.box.GetCenteredVec2();
-            speed = distance.GetNormalized() * moveSpeed;
-            associated.box.SetCenter(associated.box.GetCenteredVec2() + speed * dt);
-            if (abs((associated.box.GetCenteredVec2() - currentAction.pos).GetMagnitude()) < 2)
-                tasks.pop();
-        }
-        else if (currentAction.type == Action::ActionType::SHOOT)
-        {
-            float closestDistance = FLT_MAX;
-            Minion *closestMinion = nullptr;
-
-            for (const auto &minionWeakPtr : minions)
+            if (PenguinBody::player != nullptr)
             {
-                if (auto minionObject = minionWeakPtr.lock())
-                {
-                    Minion *minion = static_cast<Minion *>(minionObject->GetComponent("Minion"));
-                    float distance = abs((minion->GetAssociated().box.GetCenteredVec2() - currentAction.pos).GetMagnitude());
-                    if (distance < closestDistance)
-                    {
-                        closestDistance = distance;
-                        closestMinion = minion;
-                    }
-                }
+                destination = PenguinBody::player->GetAssociated().box.GetCenteredVec2();
+                speed = (destination - associated.box.GetCenteredVec2()).GetNormalized();
+                speed = speed * 0.5;
+                state = MOVING;
             }
-
-            closestMinion->Shoot(currentAction.pos);
-            tasks.pop();
         }
     }
-
+    if (state == MOVING)
+    {
+        associated.box.SetCenter(associated.box.GetCenteredVec2() + speed * dt);
+        if ((associated.box.GetCenteredVec2() - destination).GetMagnitude() < dt)
+        {
+            destination = PenguinBody::player->GetAssociated().box.GetCenteredVec2();
+            Minion *selected = nullptr;
+            float min = FLT_MAX;
+            for (unsigned int i = 0; i < minions.size(); i++)
+            {
+                shared_ptr<GameObject> tmp = minions[i].lock();
+                float dist = (tmp->box.GetCenteredVec2() - destination).GetMagnitude();
+                if (dist < min)
+                {
+                    selected = (Minion *)tmp->GetComponent("Minion");
+                    min = dist;
+                }
+            }
+            selected->Shoot(PenguinBody::player->GetAssociated().box.GetCenteredVec2());
+            state = RESTING;
+            restTimer.Restart();
+        }
+    }
     if (hp <= 0)
-        associated.RequestDelete();
-
+    {
+        associated.RemoveComponent("Sprite");
+        Sprite *sprite = new Sprite("assets/img/aliendeath.png", associated, 4, 0.25, 1.25);
+        associated.box.w = sprite->GetWidth();
+        associated.box.h = sprite->GetHeight();
+        associated.box.SetCenter(associated.box.GetCenteredVec2());
+        associated.AddComponent(sprite);
+        Sound *boom = new Sound(associated, "assets/audio/boom.wav");
+        boom->Play();
+        for (unsigned int i = 0; i < minions.size(); i++)
+        {
+            auto minion = minions[i].lock();
+            Sprite *minionsprite = new Sprite("assets/img/miniondeath.png", *minion, 4, 0.25, 1);
+            minion->box.w = minionsprite->GetWidth();
+            minion->box.h = minionsprite->GetHeight();
+            minion->RemoveComponent("Sprite");
+            minion->AddComponent(minionsprite);
+        }
+        associated.AddComponent(boom);
+    }
     associated.angle -= (2 * PI * 0.05 * dt / 1000) * 180 / PI;
     if (associated.angle < 0)
+    {
         associated.angle += 360;
+    }
 }
 
 void Alien::Render() {}

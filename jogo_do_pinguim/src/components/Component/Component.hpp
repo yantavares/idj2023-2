@@ -22,6 +22,8 @@ public:
 
     GameObject &GetAssociated() { return associated; }
 
+    virtual void NotifyCollision(GameObject &other) {}
+
     virtual void Start();
 };
 

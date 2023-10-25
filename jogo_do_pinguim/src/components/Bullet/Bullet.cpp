@@ -1,6 +1,6 @@
 #include "Bullet.hpp"
 
-Bullet::Bullet(GameObject &associated, float angle, float bulletSpeed, int damageValue, float maxTravelDistance, string bulletSprite, int frameCount, float frameTime)
+Bullet::Bullet(GameObject &associated, float angle, float bulletSpeed, int damageValue, float maxTravelDistance, string bulletSprite, bool targetsPlayer, int frameCount, float frameTime)
     : Component(associated)
 {
     Vec2 calculatedSpeed = Vec2(bulletSpeed, 0);

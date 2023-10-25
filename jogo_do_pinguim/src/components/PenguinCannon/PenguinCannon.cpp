@@ -25,6 +25,15 @@ void PenguinCannon::Update(float dt)
         Vec2 mousePos(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
         angle = (mousePos + Camera::pos - associated.box.GetCenteredVec2()).GetSlope();
         associated.angle = angle * 180 / PI;
+        shotCooldown.Update(dt);
+        if (shotCooldown.Get() > 1)
+        {
+            if (InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON))
+            {
+                Shoot();
+                shotCooldown.Restart();
+            }
+        }
     }
 }
 
