@@ -7,7 +7,7 @@ Timer::Timer(float offset)
 
 void Timer::Update(float dt)
 {
-    time += dt;
+    time += dt / 1000;
 }
 
 void Timer::Restart()

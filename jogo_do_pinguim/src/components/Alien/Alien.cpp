@@ -21,6 +21,8 @@ Alien::Alien(GameObject &associated, int minionCount) : Component(associated)
 
     alienCount++;
     state = RESTING;
+
+    dead = false;
 }
 
 Alien::~Alien()
@@ -86,7 +88,7 @@ void Alien::Update(float dt)
             restTimer.Restart();
         }
     }
-    if (hp <= 0)
+    if (hp <= 0 && !dead)
     {
         associated.RemoveComponent("Sprite");
         Sprite *sprite = new Sprite("../public/img/aliendeath.png", associated, 4, 0.25, 1.25);
@@ -106,6 +108,7 @@ void Alien::Update(float dt)
             minion->AddComponent(minionsprite);
         }
         associated.AddComponent(boom);
+        dead = true;
     }
     associated.angle -= (2 * PI * 0.05 * dt / 1000) * 180 / PI;
     if (associated.angle < 0)

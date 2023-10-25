@@ -73,6 +73,7 @@ State::~State()
 void State::Update(float dt)
 {
     quitRequested = false;
+    Camera::Update(dt);
 
     if (InputManager::GetInstance().QuitRequested())
     {
@@ -87,12 +88,12 @@ void State::Update(float dt)
     {
         objectArray[i]->Update(dt);
     }
-    for (unsigned int i = 0; i < objectArray.size(); i++)
+    for (int i = 0; i < objectArray.size(); i++)
     {
         Collider *a = (Collider *)objectArray[i]->GetComponent("Collider");
         if (a != nullptr)
         {
-            for (unsigned int j = i + 1; j < objectArray.size(); j++)
+            for (int j = i + 1; j < objectArray.size(); j++)
             {
                 Collider *b = (Collider *)objectArray[j]->GetComponent("Collider");
                 if (b != nullptr)
@@ -121,7 +122,7 @@ void State::Render()
 {
     TileMap *tm1;
     TileMap *tm;
-    for (unsigned int i = 0; i < objectArray.size(); i++)
+    for (int i = 0; i < objectArray.size(); i++)
     {
         tm1 = (TileMap *)objectArray[i]->GetComponent("TileMap");
         if (tm1 != nullptr)

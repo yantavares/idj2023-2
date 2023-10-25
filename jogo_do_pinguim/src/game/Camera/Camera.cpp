@@ -24,7 +24,7 @@ void Camera::Update(float dt)
     bool flag[2] = {false, false};
     if (focus != nullptr)
     {
-        pos = Vec2(focus->box.x + 1024 / 2 - focus->box.w / 2, focus->box.y + 600 / 2 - focus->box.h / 2);
+        pos = Vec2(focus->box.GetCenteredVec2() - Vec2(1024, 600) / 2);
     }
     else
     {

@@ -50,6 +50,8 @@ private:
 
 	Timer restTimer;
 	Vec2 destination;
+
+	bool dead;
 };
 
 #endif

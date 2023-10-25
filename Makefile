@@ -19,3 +19,6 @@ run:
 	mkdir -p $(BINDIR)
 	$(CMD)
 	cd $(BINDIR) && ./game
+
+make play:
+	cd $(BINDIR) && ./game

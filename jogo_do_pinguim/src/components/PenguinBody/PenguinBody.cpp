@@ -11,6 +11,8 @@ PenguinBody *PenguinBody::player = nullptr;
 
 PenguinBody::PenguinBody(GameObject &associated) : Component(associated)
 {
+    dead = false;
+
     speed = Vec2(0, 0);
     linearSpeed = 0;
     angle = 0;
@@ -58,7 +60,8 @@ void PenguinBody::Update(float dt)
     speed = Vec2(linearSpeed, 0).GetRotated(angle);
     associated.angle = angle * 180 / PI;
     associated.box.SetCenter(associated.box.GetCenteredVec2() + speed * dt);
-    if (hp <= 0)
+
+    if (hp <= 0 && !dead)
     {
         Camera::Unfollow();
         associated.RemoveComponent("Sprite");
@@ -73,6 +76,7 @@ void PenguinBody::Update(float dt)
         boom->Play();
         associated.AddComponent(boom);
         linearSpeed = 0;
+        dead = true;
     }
 }
 

@@ -33,6 +33,8 @@ private:
     float linearSpeed;
     float angle;
     int hp;
+
+    bool dead;
 };
 
 #endif
