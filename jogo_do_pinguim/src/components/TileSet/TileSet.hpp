@@ -13,6 +13,8 @@ public:
     void RenderTile(int index, float x, float y);
     int GetTileWidth();
     int GetTileHeight();
+    int GetRows();
+    int GetColumns();
 
 private:
     Sprite *tileSet;

@@ -13,14 +13,9 @@ Collider::Collider(GameObject &associated, Vec2 scale, Vec2 offset)
 
 void Collider::Update(float dt)
 {
-
-    box = associated.box;
-    box.w *= scale.x;
-    box.h *= scale.y;
-
-    Vec2 rotatedOffset = offset.GetRotated(associated.angle);
-
-    box.SetCenter(associated.box.GetCenteredVec2() + rotatedOffset);
+    box.h = associated.box.h * scale.y;
+    box.w = associated.box.w * scale.x;
+    box.SetCenter(associated.box.GetCenteredVec2() + offset);
 }
 
 void Collider::Render()

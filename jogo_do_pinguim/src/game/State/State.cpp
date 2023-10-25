@@ -32,7 +32,6 @@ void State::LoadAssets()
     TileSet *ts = new TileSet(*tileMap, 64, 64, "../public/img/tileset.png");
     TileMap *tm = new TileMap(*tileMap, "../public/map/tileMap.txt", ts);
     tileMap->AddComponent(tm);
-    objectArray.emplace_back(tileMap);
 
     CameraFollower *cameraFollower = new CameraFollower(*background);
     background->AddComponent(cameraFollower);
@@ -49,9 +48,10 @@ void State::LoadAssets()
     penguin->AddComponent(penguinsprite);
     penguin->AddComponent(new PenguinBody(*penguin));
 
-    objectArray.emplace_back(penguin);
-    objectArray.emplace_back(alien);
     objectArray.emplace_back(background);
+    objectArray.emplace_back(tileMap);
+    objectArray.emplace_back(alien);
+    objectArray.emplace_back(penguin);
 
     music = new Music("../public/audio/stageState.ogg");
     music->Play();
@@ -141,9 +141,9 @@ void State::Render()
 void State::Start()
 {
     LoadAssets();
-    for (auto &obj : objectArray)
+    for (int i = 0; i < objectArray.size(); i++)
     {
-        obj->Start();
+        objectArray[i]->Start();
     }
     started = true;
 }
@@ -161,11 +161,12 @@ weak_ptr<GameObject> State::AddObject(GameObject *go)
 
 weak_ptr<GameObject> State::GetObjectPtr(GameObject *go)
 {
-    for (auto &obj : objectArray)
+    for (int i = 0; i < objectArray.size(); i++)
     {
-        if (obj.get() == go)
+        if (objectArray[i].get() == go)
         {
-            return weak_ptr<GameObject>(obj);
+
+            return weak_ptr<GameObject>(objectArray[i]);
         }
     }
     return weak_ptr<GameObject>();

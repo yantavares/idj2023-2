@@ -5,6 +5,8 @@ TileMap::TileMap(GameObject &associated, string file, TileSet *tileSet) : Compon
 {
     Load(file);
     this->tileSet = tileSet;
+
+    associated.box = Rect(0, 0, tileSet->GetColumns() * tileSet->GetTileWidth(), tileSet->GetRows() * tileSet->GetTileHeight());
 }
 
 TileMap::~TileMap()
@@ -55,15 +57,11 @@ void TileMap::Render()
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY)
 {
-    for (int y = 0; y < mapHeight; y++)
+    for (int i = 0; i < mapHeight; i++)
     {
-        for (int x = 0; x < mapWidth; x++)
+        for (int j = 0; j < mapWidth; j++)
         {
-            int tileIndex = At(x, y, layer);
-            if (tileIndex >= 0)
-            {
-                tileSet->RenderTile(tileIndex, x * tileSet->GetTileWidth() - cameraX, y * tileSet->GetTileHeight() - cameraY);
-            }
+            tileSet->RenderTile(At(j, i, layer), (j * tileSet->GetTileWidth() - cameraX * (layer + 1)), (i * tileSet->GetTileHeight() - cameraY * (layer + 1)));
         }
     }
 }

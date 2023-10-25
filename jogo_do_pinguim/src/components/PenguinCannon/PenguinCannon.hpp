@@ -18,6 +18,8 @@ public:
 
     void Shoot();
 
+    void NotifyCollision(GameObject &other);
+
 private:
     weak_ptr<GameObject> pbody;
     float angle;

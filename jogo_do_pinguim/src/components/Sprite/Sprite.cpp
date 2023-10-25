@@ -33,17 +33,6 @@ Sprite::~Sprite()
 
 void Sprite::Open(string file)
 {
-    /*     if (texture != nullptr)
-        {
-            SDL_DestroyTexture(texture);
-        }
-        texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
-        if (texture == nullptr)
-        {
-            cerr << "Failed to load texture: " << SDL_GetError() << endl;
-            return;
-        }
-        SDL_QueryTexture(texture, nullptr, nullptr, &width, &height); */
 
     texture = Resources::GetImage(file);
     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
@@ -71,10 +60,10 @@ void Sprite::Render()
 void Sprite::Render(float x, float y, float w, float h)
 {
     SDL_Rect dstRect;
-    dstRect.x = x;
-    dstRect.y = y;
-    dstRect.h = h;
-    dstRect.w = w;
+    dstRect.x = nearbyint(x);
+    dstRect.y = nearbyint(y);
+    dstRect.h = nearbyint(h);
+    dstRect.w = nearbyint(w);
     SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect);
 }
 

@@ -5,6 +5,7 @@
 #include "../Collider/Collider.hpp"
 #include "../../game/Camera/Camera.hpp"
 #include "../Sound/Sound.hpp"
+#include "../Bullet/Bullet.hpp"
 
 PenguinBody *PenguinBody::player = nullptr;
 
@@ -63,14 +64,23 @@ void PenguinBody::Update(float dt)
         associated.RemoveComponent("Sprite");
         auto cannon = pcannon.lock();
         cannon->RemoveComponent("Sprite");
-        Sprite *sprite = new Sprite("assets/img/penguindeath.png", associated, 5, 0.2, 1);
+        Sprite *sprite = new Sprite("../public/img/penguindeath.png", associated, 5, 0.2, 1);
         associated.box.w = sprite->GetWidth();
         associated.box.h = sprite->GetHeight();
         associated.box.SetCenter(associated.box.GetCenteredVec2());
         associated.AddComponent(sprite);
-        Sound *boom = new Sound(associated, "assets/audio/boom.wav");
+        Sound *boom = new Sound(associated, "../public/audio/boom.wav");
         boom->Play();
         associated.AddComponent(boom);
         linearSpeed = 0;
+    }
+}
+
+void PenguinBody::NotifyCollision(GameObject &other)
+{
+    Bullet *bullet = (Bullet *)other.GetComponent("Bullet");
+    if (bullet != nullptr && bullet->targetsPlayer)
+    {
+        hp -= bullet->GetDamage();
     }
 }

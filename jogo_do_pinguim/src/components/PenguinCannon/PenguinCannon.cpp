@@ -56,3 +56,11 @@ bool PenguinCannon::Is(string type)
 {
     return type == "PenguinCannon";
 }
+
+void PenguinCannon::NotifyCollision(GameObject &other)
+{
+    /*Bullet* bullet = (Bullet*)other.GetComponent("Bullet");
+    if (bullet) {
+        PenguinBody::player->NotifyCollision(other);
+    }*/
+}

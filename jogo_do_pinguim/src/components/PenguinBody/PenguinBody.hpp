@@ -18,10 +18,12 @@ public:
     PenguinBody(GameObject &associated);
     virtual ~PenguinBody();
 
-    void Start() override;
-    void Update(float dt) override;
-    void Render() override;
-    bool Is(std::string type) override;
+    void Start();
+    void Update(float dt);
+    void Render();
+    bool Is(std::string type);
+
+    void NotifyCollision(GameObject &other);
 
     static PenguinBody *player;
 

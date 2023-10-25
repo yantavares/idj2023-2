@@ -36,3 +36,13 @@ int TileSet::GetTileHeight()
 {
     return tileHeight;
 }
+
+int TileSet::GetRows()
+{
+    return rows;
+}
+
+int TileSet::GetColumns()
+{
+    return columns;
+}
