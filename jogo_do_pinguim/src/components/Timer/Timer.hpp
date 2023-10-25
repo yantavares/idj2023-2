@@ -4,7 +4,7 @@
 class Timer
 {
 public:
-    Timer();
+    Timer(float offset = 0);
 
     void Update(float dt);
     void Restart();

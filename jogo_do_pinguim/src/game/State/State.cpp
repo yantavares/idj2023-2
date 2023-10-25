@@ -9,6 +9,7 @@
 #include "../../components/CameraFollower/CameraFollower.hpp"
 #include "../../components/Alien/Alien.hpp"
 #include "../../components/Resources/Resources.hpp"
+#include "../../components/PenguinBody/PenguinBody.hpp"
 
 State::State()
 {
@@ -34,6 +35,15 @@ void State::LoadAssets()
     GameObject *alien = new GameObject();
     alien->AddComponent(new Alien(*alien, 3));
 
+    GameObject *penguin = new GameObject();
+    Sprite *penguinsprite = new Sprite("../public/img/penguin.png", *penguin);
+    penguin->box.SetCenter(704, 640);
+    penguin->box.h = penguinsprite->GetHeight();
+    penguin->box.w = penguinsprite->GetWidth();
+    penguin->AddComponent(penguinsprite);
+    penguin->AddComponent(new PenguinBody(*penguin));
+
+    objectArray.emplace_back(penguin);
     objectArray.emplace_back(background);
     objectArray.emplace_back(alien);
 

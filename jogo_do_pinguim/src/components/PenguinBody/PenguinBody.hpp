@@ -10,7 +10,7 @@
 
 #define CONST_ACCELERATION 0.01;
 #define ANGULAR_SPEED 0.001;
-#define MAX_SPEED 1.0
+#define MAX_SPEED 0.25
 
 class PenguinBody : public Component
 {

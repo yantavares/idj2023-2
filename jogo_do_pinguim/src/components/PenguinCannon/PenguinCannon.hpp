@@ -22,6 +22,8 @@ private:
     weak_ptr<GameObject> pbody;
     float angle;
 
+    Timer timer;
+
     Timer shotCooldown;
     const float COOLDOWN_TIME = 2.0f; // 2 segundos
 };

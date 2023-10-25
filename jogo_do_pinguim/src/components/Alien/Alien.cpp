@@ -89,17 +89,17 @@ void Alien::Update(float dt)
     if (hp <= 0)
     {
         associated.RemoveComponent("Sprite");
-        Sprite *sprite = new Sprite("assets/img/aliendeath.png", associated, 4, 0.25, 1.25);
+        Sprite *sprite = new Sprite("../public/img/aliendeath.png", associated, 4, 0.25, 1.25);
         associated.box.w = sprite->GetWidth();
         associated.box.h = sprite->GetHeight();
         associated.box.SetCenter(associated.box.GetCenteredVec2());
         associated.AddComponent(sprite);
-        Sound *boom = new Sound(associated, "assets/audio/boom.wav");
+        Sound *boom = new Sound(associated, "../public/audio/boom.wav");
         boom->Play();
         for (unsigned int i = 0; i < minions.size(); i++)
         {
             auto minion = minions[i].lock();
-            Sprite *minionsprite = new Sprite("assets/img/miniondeath.png", *minion, 4, 0.25, 1);
+            Sprite *minionsprite = new Sprite("../public/img/miniondeath.png", *minion, 4, 0.25, 1);
             minion->box.w = minionsprite->GetWidth();
             minion->box.h = minionsprite->GetHeight();
             minion->RemoveComponent("Sprite");

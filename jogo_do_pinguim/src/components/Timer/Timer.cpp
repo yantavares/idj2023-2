@@ -1,6 +1,9 @@
 #include "Timer.hpp"
 
-Timer::Timer() : time(0) {}
+Timer::Timer(float offset)
+{
+    time = offset;
+}
 
 void Timer::Update(float dt)
 {

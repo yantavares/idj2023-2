@@ -6,10 +6,14 @@
 #include "../Sprite/Sprite.hpp"
 #include "../../game/Camera/Camera.hpp"
 #include "../../geometry/Vec2/Vec2.hpp"
+#include "../Timer/Timer.hpp"
+#include "../Collider/Collider.hpp"
 
 PenguinCannon::PenguinCannon(GameObject &associated, weak_ptr<GameObject> penguinBody) : Component(associated)
 {
     pbody = penguinBody;
+    associated.AddComponent(new Collider(associated));
+    shotCooldown = Timer(5);
 }
 
 void PenguinCannon::Update(float dt)
@@ -41,7 +45,7 @@ void PenguinCannon::Shoot()
 {
     GameObject *tmp = new GameObject();
     tmp->box.SetCenter(associated.box.GetCenteredVec2());
-    Bullet *bullet = new Bullet(*tmp, angle, 0.5, 10, 1000, "assets/img/penguinbullet.png", false, 4);
+    Bullet *bullet = new Bullet(*tmp, angle, 0.5, 10, 1000, "../public/img/penguinbullet.png", false, 4);
     tmp->AddComponent(bullet);
     Game::GetInstance().GetState().AddObject(tmp);
 }
