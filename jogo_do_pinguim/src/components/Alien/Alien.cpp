@@ -4,6 +4,9 @@
 #include "../../game/InputManager/InputManager.hpp"
 #include "../PenguinBody/PenguinBody.hpp"
 #include "../Sound/Sound.hpp"
+#include "../Collider/Collider.hpp"
+#include "../Bullet/Bullet.hpp"
+
 #include <SDL2/SDL.h>
 
 int Alien::alienCount = 0;
@@ -15,6 +18,8 @@ Alien::Alien(GameObject &associated, int minionCount) : Component(associated)
     associated.box.w = alienSprite->GetWidth();
     associated.box.SetCenter(512, 300);
     associated.AddComponent(alienSprite);
+    associated.AddComponent(new Collider(associated));
+
     this->nMinions = minionCount;
     hp = 30;
     speed = Vec2(0, 0);
@@ -126,3 +131,12 @@ bool Alien::Is(string type)
 
 Alien::Action::Action(ActionType actionType, float x, float y)
     : type(actionType), pos(x, y) {}
+
+void Alien::NotifyCollision(GameObject &other)
+{
+    Bullet *bullet = (Bullet *)other.GetComponent("Bullet");
+    if (bullet != nullptr && !bullet->targetsPlayer)
+    {
+        hp -= bullet->GetDamage();
+    }
+}

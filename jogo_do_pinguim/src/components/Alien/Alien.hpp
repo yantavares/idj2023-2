@@ -19,6 +19,8 @@ public:
 	void Render();
 	bool Is(string type);
 
+	void NotifyCollision(GameObject &other);
+
 	static int alienCount;
 
 private:
