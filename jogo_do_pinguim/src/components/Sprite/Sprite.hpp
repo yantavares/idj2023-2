@@ -13,7 +13,8 @@ class Sprite : public Component
 {
 public:
     Sprite(GameObject &associated);
-    Sprite(string file, GameObject &associated);
+    Sprite(string file, GameObject &associated, int frameCount = 1, float frameTime = 1);
+
     ~Sprite();
     void Open(string file);
     void SetClip(int x, int y, int w, int h);
@@ -23,6 +24,9 @@ public:
     int GetHeight();
     bool IsOpen();
     void Update(float dt);
+    void SetFrame(int frame);
+    void SetFrameCount(int frameCount);
+    void SetFrameTime(float frameTime);
     bool Is(string type);
     void SetScale(float scaleX, float scaleY);
 
@@ -34,6 +38,11 @@ private:
     Vec2 scale;
 
     string file;
+
+    int frameCount;
+    float frameTime;
+    int currentFrame;
+    float timeElapsed;
 };
 
 #endif

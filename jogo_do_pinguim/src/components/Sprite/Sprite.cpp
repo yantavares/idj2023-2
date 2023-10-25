@@ -9,8 +9,12 @@ Sprite::Sprite(GameObject &associated) : Component(associated)
     scale = Vec2(1, 1);
 }
 
-Sprite::Sprite(string file, GameObject &associated) : Component(associated)
+Sprite::Sprite(string file, GameObject &associated, int frameCount = 1, float frameTime = 1) : Component(associated)
 {
+    this->frameCount = frameCount;
+    this->frameTime = frameTime;
+    this->currentFrame = 0;
+    this->timeElapsed = 0;
     texture = nullptr;
     Open(file);
     SetClip(0, 0, width, height);
@@ -74,12 +78,12 @@ void Sprite::Render(float x, float y, float w, float h)
 
 int Sprite::GetWidth()
 {
-    return clipRect.w;
+    return width / frameCount * scale.x;
 }
 
 int Sprite::GetHeight()
 {
-    return clipRect.h;
+    return height * scale.y;
 }
 
 bool Sprite::IsOpen()
@@ -103,4 +107,40 @@ void Sprite::SetScale(float scaleX, float scaleY)
     associated.box.x *= scale.x;
     associated.box.y *= scale.y;
     associated.box.SetCenter(center);
+}
+
+void Sprite::Update(float dt)
+{
+    timeElapsed += dt;
+    if (timeElapsed > frameTime)
+    {
+        timeElapsed = 0;
+
+        currentFrame++;
+
+        if (currentFrame > frameCount - 1)
+        {
+            currentFrame = 0;
+        }
+        SetFrame(currentFrame);
+    }
+}
+
+void Sprite::SetFrame(int frame)
+{
+    int x = frame * GetWidth();
+    int y = 0;
+    int w = GetWidth();
+    int h = GetHeight();
+    SetClip(x, y, w, h);
+}
+
+void Sprite::SetFrameCount(int frameCount)
+{
+    this->frameCount = frameCount;
+}
+
+void Sprite::SetFrameTime(float frameTime)
+{
+    this->frameTime = frameTime;
 }
