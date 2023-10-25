@@ -9,7 +9,7 @@ Sprite::Sprite(GameObject &associated) : Component(associated)
     scale = Vec2(1, 1);
 }
 
-Sprite::Sprite(string file, GameObject &associated, int frameCount = 1, float frameTime = 1) : Component(associated)
+Sprite::Sprite(string file, GameObject &associated, int frameCount, float frameTime) : Component(associated)
 {
     this->frameCount = frameCount;
     this->frameTime = frameTime;
@@ -89,10 +89,6 @@ int Sprite::GetHeight()
 bool Sprite::IsOpen()
 {
     return texture != nullptr;
-}
-
-void Sprite::Update(float dt)
-{
 }
 
 bool Sprite::Is(string type)
