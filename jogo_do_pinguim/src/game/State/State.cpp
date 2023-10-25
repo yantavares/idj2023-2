@@ -10,6 +10,8 @@
 #include "../../components/Alien/Alien.hpp"
 #include "../../components/Resources/Resources.hpp"
 #include "../../components/PenguinBody/PenguinBody.hpp"
+#include "../../components/PenguinCannon/PenguinCannon.hpp"
+#include "../../components/Collider/Collider.hpp"
 
 State::State()
 {
@@ -80,6 +82,25 @@ void State::Update(float dt)
     for (int i = 0; i < objectArray.size(); i++)
     {
         objectArray[i]->Update(dt);
+    }
+    for (unsigned int i = 0; i < objectArray.size(); i++)
+    {
+        Collider *a = (Collider *)objectArray[i]->GetComponent("Collider");
+        if (a != nullptr)
+        {
+            for (unsigned int j = i + 1; j < objectArray.size(); j++)
+            {
+                Collider *b = (Collider *)objectArray[j]->GetComponent("Collider");
+                if (b != nullptr)
+                {
+                    if (Collision::IsColliding(a->box, b->box, a->associated.angleDeg, b->associated.angleDeg))
+                    {
+                        objectArray[i]->NotifyCollision(*objectArray[j]);
+                        objectArray[j]->NotifyCollision(*objectArray[i]);
+                    }
+                }
+            }
+        }
     }
     for (int i = 0; i < objectArray.size(); i++)
     {
