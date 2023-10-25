@@ -11,26 +11,22 @@ Sprite::Sprite(GameObject &associated) : Component(associated)
 
 Sprite::Sprite(string file, GameObject &associated, int frameCount, float frameTime, float secondsToSelfDestruct) : Component(associated)
 {
+    texture = nullptr;
+    Open(file);
+    SetClip(0, 0, width, height);
+    scale = Vec2(1, 1);
+
     this->frameCount = frameCount;
     this->frameTime = frameTime;
     this->currentFrame = 0;
     this->timeElapsed = 0;
     this->secondsToSelfDestruct = secondsToSelfDestruct;
     selfDestructCount = Timer();
-    texture = nullptr;
-    Open(file);
-    SetClip(0, 0, width, height);
-    scale = Vec2(1, 1);
 }
 
 Sprite::~Sprite()
 {
-    /*     if (texture != nullptr)
-        {
-            SDL_DestroyTexture(texture);
-        } */
 }
-
 void Sprite::Open(string file)
 {
 
@@ -52,8 +48,8 @@ void Sprite::Render()
     SDL_Rect dstRect;
     dstRect.x = associated.box.x - Camera::pos.x;
     dstRect.y = associated.box.y - Camera::pos.y;
-    dstRect.h = height * scale.y;
-    dstRect.w = width * scale.x;
+    dstRect.h = GetHeight();
+    dstRect.w = GetWidth();
     SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect, associated.angle, nullptr, SDL_FLIP_NONE);
 }
 
