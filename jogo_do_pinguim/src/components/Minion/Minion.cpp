@@ -33,7 +33,7 @@ void Minion::Shoot(Vec2 pos)
     GameObject *bulletObj = new GameObject();
     bulletObj->box.x = associated.box.GetCenteredVec2().x;
     bulletObj->box.y = associated.box.GetCenteredVec2().y;
-    Bullet *bullet = new Bullet(*bulletObj, shootDir.GetSlope(), 0.5, 10, 1000, "../public/img/minionbullet2.png");
+    Bullet *bullet = new Bullet(*bulletObj, shootDir.GetSlope(), 0.5, 10, 1000, "../public/img/minionbullet2.png", true);
     bulletObj->AddComponent(bullet);
     Game::GetInstance().GetState().AddObject(bulletObj);
 }

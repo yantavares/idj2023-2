@@ -3,10 +3,10 @@
 
 #include <string>
 
-#include "Vec2.hpp"
-#include "Rect.hpp"
-#include "Component.hpp"
-#include "GameObject.hpp"
+#include "../../geometry/Vec2/Vec2.hpp"
+#include "../../geometry/Rect/Rect.hpp"
+#include "../Component/Component.hpp"
+#include "../GameObject/GameObject.hpp"
 
 class Collider : public Component
 {

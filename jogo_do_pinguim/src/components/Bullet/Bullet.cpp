@@ -1,17 +1,22 @@
 #include "Bullet.hpp"
+#include "../Collider/Collider.hpp"
 
-Bullet::Bullet(GameObject &associated, float angle, float bulletSpeed, int damageValue, float maxTravelDistance, string bulletSprite, bool targetsPlayer, int frameCount, float frameTime)
-    : Component(associated)
+Bullet::Bullet(GameObject &associated, float angle, float speed, int damage, float maxDistance, string sprite, bool targetsPlayer, int frameCount) : Component(associated)
 {
-    Vec2 calculatedSpeed = Vec2(bulletSpeed, 0);
+    Vec2 speedtmp = Vec2(speed, 0);
     associated.angle = angle * 180 / PI;
-    speed = calculatedSpeed.GetRotated(angle);
-    distanceLeft = maxTravelDistance;
-    damage = damageValue;
-    Sprite *bulletImage = new Sprite(bulletSprite, associated);
-    associated.box.w = bulletImage->GetWidth();
-    associated.box.h = bulletImage->GetHeight();
-    associated.AddComponent(bulletImage);
+
+    this->speed = speedtmp.GetRotated(angle);
+    this->targetsPlayer = targetsPlayer;
+    distanceLeft = maxDistance;
+    this->damage = damage;
+    Sprite *spritetmp = new Sprite(sprite, associated, frameCount);
+
+    associated.box.w = spritetmp->GetWidth();
+    associated.box.h = spritetmp->GetHeight();
+    associated.AddComponent(spritetmp);
+    associated.AddComponent(new Collider(associated));
+    associated.box.SetCenter(associated.box.GetCenteredVec2() + Vec2(125, 0).GetRotated(angle));
 }
 
 void Bullet::Update(float dt)
