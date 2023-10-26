@@ -8,8 +8,8 @@
 #include <string>
 #include <memory>
 
-#define CONST_ACCELERATION 0.01;
-#define ANGULAR_SPEED 0.001;
+#define CONST_ACCELERATION 0.01
+#define ANGULAR_SPEED 0.001
 #define MAX_SPEED 0.25
 
 class PenguinBody : public Component

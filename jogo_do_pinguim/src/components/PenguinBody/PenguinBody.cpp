@@ -49,14 +49,14 @@ void PenguinBody::Start()
 
 void PenguinBody::Update(float dt)
 {
-    if (InputManager::GetInstance().IsKeyDown(W_KEY) && linearSpeed < 0.25)
-        linearSpeed += 0.01;
-    else if (InputManager::GetInstance().IsKeyDown(S_KEY) && linearSpeed > -0.25)
-        linearSpeed -= 0.01;
+    if (InputManager::GetInstance().IsKeyDown(W_KEY) && linearSpeed < MAX_SPEED)
+        linearSpeed += CONST_ACCELERATION * dt;
+    else if (InputManager::GetInstance().IsKeyDown(S_KEY) && linearSpeed > -MAX_SPEED)
+        linearSpeed -= CONST_ACCELERATION * dt;
     if (InputManager::GetInstance().IsKeyDown(A_KEY))
-        angle -= 0.001 * dt;
+        angle -= ANGULAR_SPEED * dt;
     else if (InputManager::GetInstance().IsKeyDown(D_KEY))
-        angle += 0.001 * dt;
+        angle += ANGULAR_SPEED * dt;
     speed = Vec2(linearSpeed, 0).GetRotated(angle);
     associated.angle = angle * 180 / PI;
     associated.box.SetCenter(associated.box.GetCenteredVec2() + speed * dt);
@@ -64,17 +64,22 @@ void PenguinBody::Update(float dt)
     if (hp <= 0 && !dead)
     {
         Camera::Unfollow();
+
         associated.RemoveComponent("Sprite");
+
         auto cannon = pcannon.lock();
         cannon->RemoveComponent("Sprite");
+
         Sprite *sprite = new Sprite("../public/img/penguindeath.png", associated, 5, 0.2, 1);
         associated.box.w = sprite->GetWidth();
         associated.box.h = sprite->GetHeight();
         associated.box.SetCenter(associated.box.GetCenteredVec2());
         associated.AddComponent(sprite);
+
         Sound *boom = new Sound(associated, "../public/audio/boom.wav");
         boom->Play();
         associated.AddComponent(boom);
+
         linearSpeed = 0;
         dead = true;
     }
