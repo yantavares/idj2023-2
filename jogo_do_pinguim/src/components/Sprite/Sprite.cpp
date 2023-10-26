@@ -60,6 +60,7 @@ void Sprite::Render(float x, float y, float w, float h)
     dstRect.y = nearbyint(y);
     dstRect.h = nearbyint(h);
     dstRect.w = nearbyint(w);
+
     SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect);
 }
 
