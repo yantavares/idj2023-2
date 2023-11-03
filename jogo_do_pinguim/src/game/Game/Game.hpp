@@ -6,7 +6,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <iostream>
 
-#include "../State/State.hpp"
+#include "../State/StageState.hpp"
 
 using namespace std;
 
