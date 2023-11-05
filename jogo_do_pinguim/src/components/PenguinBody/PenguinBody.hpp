@@ -21,14 +21,14 @@ public:
     void Start();
     void Update(float dt);
     void Render();
-    bool Is(std::string type);
+    bool Is(string type);
 
     void NotifyCollision(GameObject &other);
 
     static PenguinBody *player;
 
 private:
-    std::weak_ptr<GameObject> pcannon;
+    weak_ptr<GameObject> pcannon;
     Vec2 speed;
     float linearSpeed;
     float angle;

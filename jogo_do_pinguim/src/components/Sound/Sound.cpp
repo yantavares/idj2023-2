@@ -32,7 +32,7 @@ void Sound::Stop()
     Mix_HaltChannel(channel);
 }
 
-void Sound::Open(std::string file)
+void Sound::Open(string file)
 {
     chunk = Resources::GetSound(file);
 }

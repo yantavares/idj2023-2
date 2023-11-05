@@ -14,14 +14,14 @@
 #include "../../components/Collider/Collider.hpp"
 #include "../Collision/Collision.hpp"
 
-State::State()
+StageState::StageState()
 {
     music = nullptr;
     quitRequested = false;
     started = false;
 }
 
-void State::LoadAssets()
+void StageState::LoadAssets()
 {
     GameObject *background = new GameObject();
     Sprite *bg = new Sprite("../public/img/ocean.jpg", *background);
@@ -53,16 +53,16 @@ void State::LoadAssets()
     objectArray.emplace_back(alien);
     objectArray.emplace_back(penguin);
 
-    music = new Music("../public/audio/stageState.ogg");
+    music = new Music("../public/audio/stageStageState.ogg");
     music->Play();
 }
 
-bool State::QuitRequested()
+bool StageState::QuitRequested()
 {
     return quitRequested;
 }
 
-State::~State()
+StageState::~StageState()
 {
     Resources::ClearImages();
     Resources::ClearMusics();
@@ -70,7 +70,7 @@ State::~State()
     objectArray.clear();
 }
 
-void State::Update(float dt)
+void StageState::Update(float dt)
 {
     quitRequested = false;
     Camera::Update(dt);
@@ -118,7 +118,7 @@ void State::Update(float dt)
     Camera::Update(dt);
 }
 
-void State::Render()
+void StageState::Render()
 {
     TileMap *tm1;
     TileMap *tm;
@@ -139,7 +139,7 @@ void State::Render()
     }
 }
 
-void State::Start()
+/* void StageState::Start()
 {
     LoadAssets();
     for (int i = 0; i < objectArray.size(); i++)
@@ -147,9 +147,9 @@ void State::Start()
         objectArray[i]->Start();
     }
     started = true;
-}
+} */
 
-weak_ptr<GameObject> State::AddObject(GameObject *go)
+weak_ptr<GameObject> StageState::AddObject(GameObject *go)
 {
     shared_ptr<GameObject> sharedGo(go);
     objectArray.emplace_back(sharedGo);
@@ -160,7 +160,7 @@ weak_ptr<GameObject> State::AddObject(GameObject *go)
     return weak_ptr<GameObject>(sharedGo);
 }
 
-weak_ptr<GameObject> State::GetObjectPtr(GameObject *go)
+weak_ptr<GameObject> StageState::GetObjectPtr(GameObject *go)
 {
     for (int i = 0; i < objectArray.size(); i++)
     {
@@ -171,4 +171,22 @@ weak_ptr<GameObject> State::GetObjectPtr(GameObject *go)
         }
     }
     return weak_ptr<GameObject>();
+}
+
+void StageState::Start()
+{
+    LoadAssets();
+    StartArray();
+    started = true;
+    return;
+}
+
+void StageState::Pause()
+{
+    return;
+}
+
+void StageState::Resume()
+{
+    return;
 }

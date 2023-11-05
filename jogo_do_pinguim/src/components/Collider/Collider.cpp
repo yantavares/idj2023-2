@@ -42,7 +42,7 @@ void Collider::Render()
 #endif
 }
 
-bool Collider::Is(std::string type)
+bool Collider::Is(string type)
 {
     return type == "Collider";
 }

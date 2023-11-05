@@ -15,7 +15,7 @@ public:
 
     void Update(float dt);
     void Render();
-    bool Is(std::string type);
+    bool Is(string type);
 
     void SetScale(Vec2 scale);
     void SetOffset(Vec2 offset);

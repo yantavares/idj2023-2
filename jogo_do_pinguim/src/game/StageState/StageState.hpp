@@ -1,5 +1,5 @@
-#ifndef STATE_HPP
-#define STATE_HPP
+#ifndef STAGESTATE_HPP
+#define STAGESTATE_HPP
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -10,19 +10,22 @@
 
 #include "../../components/Sprite/Sprite.hpp"
 #include "../Music/Music.hpp"
+#include "../State/State.hpp"
 
 using namespace std;
 
-class State
+class StageState : public State
 {
 public:
-    State();
-    ~State();
+    StageState();
+    ~StageState();
     bool QuitRequested();
     void LoadAssets();
     void Update(float dt);
     void Render();
 
+    void Pause();
+    void Resume();
     void Start();
 
     weak_ptr<GameObject> AddObject(GameObject *go);
@@ -31,8 +34,6 @@ public:
 private:
     Music *music;
     bool quitRequested;
-
-    void Input();
 
     bool started;
     vector<shared_ptr<GameObject>> objectArray;

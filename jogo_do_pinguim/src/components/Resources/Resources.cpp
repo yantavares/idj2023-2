@@ -1,3 +1,5 @@
+#include <SDL2/SDL_ttf.h>
+
 #include "Resources.hpp"
 #include "../../game/Game/Game.hpp"
 
@@ -79,4 +81,42 @@ void Resources::ClearSounds()
         Mix_FreeChunk(a.second);
     }
     soundTable.clear();
+}
+
+TTF_Font *Resources::GetFont(std::string file, int size)
+{
+    if (fontTable.find(file + std::to_string(size)) != fontTable.end())
+    {
+        return fontTable.at(file + std::to_string(size));
+    }
+    else
+    {
+        OpenFont(file, size);
+        return fontTable.at(file + std::to_string(size));
+    }
+}
+
+void Resources::ClearFonts()
+{
+    for (auto it = fontTable.begin(); it != fontTable.end(); it++)
+    {
+        TTF_CloseFont(std::get<1>(*it));
+    }
+    fontTable.clear();
+    return;
+}
+
+void Resources::OpenFont(std::string file, int size)
+{
+    TTF_Font *font;
+    if (fontTable.find(file + std::to_string(size)) == fontTable.end())
+    {
+        font = TTF_OpenFont(file.c_str(), size);
+        if (font == nullptr)
+        {
+            std::cout << SDL_GetError();
+        }
+    }
+    fontTable.insert({file + std::to_string(size), font});
+    return;
 }

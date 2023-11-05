@@ -3,15 +3,11 @@
 
 #include <unordered_map>
 #include <string>
-#if defined(_WIN64) || defined(_WIN32)
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_mixer.h>
-#else
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
-#endif
+#include <SDL2/SDL_ttf.h>
 
 using namespace std;
 
@@ -24,11 +20,15 @@ public:
     static void ClearMusics();
     static Mix_Chunk *GetSound(string file);
     static void ClearSounds();
+    static TTF_Font *GetFont(string file, int size);
+    static void ClearFonts();
 
 private:
+    static void OpenFont(string file, int size);
     static unordered_map<string, SDL_Texture *> imageTable;
     static unordered_map<string, Mix_Music *> musicTable;
     static unordered_map<string, Mix_Chunk *> soundTable;
+    static unordered_map<string, TTF_Font *> fontTable;
 };
 
 #endif

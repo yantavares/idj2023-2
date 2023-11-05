@@ -1,11 +1,12 @@
 #include <SDL2/SDL.h>
 
 #include "game/Game/Game.hpp"
+#include "game/TitleState/TitleState.hpp"
 
-int main(int argc, char **argv)
+int main(int, char **)
 {
-    srand(time(NULL));
     Game &game = Game::GetInstance();
+    game.Push(new TitleState());
     game.Run();
     return 0;
 }
