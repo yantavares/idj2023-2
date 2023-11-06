@@ -3,6 +3,7 @@
 #include "../StageState/StageState.hpp"
 #include "../Game/Game.hpp"
 #include "../../components/Text/Text.hpp"
+#include "../../components/Sprite/Sprite.hpp"
 
 TitleState::TitleState()
 {
@@ -12,6 +13,7 @@ TitleState::TitleState()
     popRequested = false;
 
     GameObject *bg = new GameObject();
+    cout << "Sprite" << endl;
     Sprite *newspr = new Sprite("../public/img/title.jpg", *bg);
 
     CameraFollower *newflwr = new CameraFollower(*bg);
