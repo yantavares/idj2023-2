@@ -6,6 +6,7 @@
 unordered_map<string, SDL_Texture *> Resources::imageTable;
 unordered_map<string, Mix_Music *> Resources::musicTable;
 unordered_map<string, Mix_Chunk *> Resources::soundTable;
+unordered_map<string, TTF_Font *> Resources::fontTable;
 
 SDL_Texture *Resources::GetImage(string filepath)
 {

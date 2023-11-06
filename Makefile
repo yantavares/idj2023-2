@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -w -lSDL2 -lSDL2_mixer -lSDL2_image
+CXXFLAGS = -w -lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf
 SRCDIR = jogo_do_pinguim/src
 BINDIR = jogo_do_pinguim/bin
 TARGET = $(BINDIR)/game
