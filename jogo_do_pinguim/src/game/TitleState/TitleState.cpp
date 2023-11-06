@@ -15,6 +15,7 @@ TitleState::TitleState()
     GameObject *bg = new GameObject();
     cout << "Sprite" << endl;
     Sprite *newspr = new Sprite("../public/img/title.jpg", *bg);
+    bg->box = {0, 0, newspr->GetWidth(), newspr->GetHeight()};
 
     CameraFollower *newflwr = new CameraFollower(*bg);
     bg->AddComponent(newspr);
