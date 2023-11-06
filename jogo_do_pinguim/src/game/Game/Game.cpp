@@ -107,7 +107,6 @@ void Game::Run()
         exit(1);
     }
 
-    // Push the initial state
     stateStack.emplace(storedState);
     storedState = nullptr;
 
@@ -133,7 +132,6 @@ void Game::Run()
             storedState = nullptr;
         }
 
-        // Game loop body...
         CalculateDeltaTime();
         stateStack.top()->Update(GetDeltaTime());
         stateStack.top()->Render();

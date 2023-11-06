@@ -6,22 +6,23 @@
 
 TitleState::TitleState()
 {
+    cout << "TitleState started" << endl;
     started = false;
     quitRequested = false;
     popRequested = false;
-    // background
+
     GameObject *bg = new GameObject();
-    Sprite *newspr = new Sprite("../public/img/title.jpg", (*bg));
+    Sprite *newspr = new Sprite("../public/img/title.jpg", *bg);
+
     CameraFollower *newflwr = new CameraFollower(*bg);
     bg->AddComponent(newspr);
     bg->AddComponent(newflwr);
     AddObject(bg);
-    // text
+
+    cout << "Font" << endl;
     GameObject *text = new GameObject();
     Text *newtxt = new Text((*text), "../public/font/Call me maybe.ttf", 100, Text::TextStyle::SOLID, "Press Space To Start", {255, 255, 255, 255}, 1);
     text->AddComponent(newtxt);
-    // CameraFollower* newflwr2=new CameraFollower(*text);
-    // text->AddComponent(newflwr2);
     text->box.y = Camera::pos.y + 400;
     text->box.x = Camera::pos.x + 40;
     AddObject(text);
