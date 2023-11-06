@@ -12,15 +12,15 @@ TitleState::TitleState()
     quitRequested = false;
     popRequested = false;
 
-    GameObject *bg = new GameObject();
-    cout << "Sprite" << endl;
-    Sprite *newspr = new Sprite("../public/img/title.jpg", *bg);
-    bg->box = {0, 0, newspr->GetWidth(), newspr->GetHeight()};
+    GameObject *background = new GameObject();
+    Sprite *bg = new Sprite("../public/img/ocean.jpg", *background);
+    background->box = {0, 0, bg->GetWidth(), bg->GetHeight()};
+    background->AddComponent(bg);
 
-    CameraFollower *newflwr = new CameraFollower(*bg);
-    bg->AddComponent(newspr);
-    bg->AddComponent(newflwr);
-    AddObject(bg);
+    CameraFollower *newflwr = new CameraFollower(*background);
+    background->AddComponent(bg);
+    background->AddComponent(newflwr);
+    AddObject(background);
 
     cout << "Font" << endl;
     GameObject *text = new GameObject();
