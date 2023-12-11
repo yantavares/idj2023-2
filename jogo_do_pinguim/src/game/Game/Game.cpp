@@ -1,14 +1,60 @@
 #include "Game.hpp"
 #include "../InputManager/InputManager.hpp"
+#include "../../components/Resources/Resources.hpp"
 
 Game *Game::instance = nullptr;
 
-Game::Game(string title, int width, int height)
+Game::Game(char *title, int width, int height)
 {
+    if (instance == nullptr)
+    {
+        instance = this;
+    }
 
-    frameStart = 0;
-    dt = 0.0f;
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0)
+    {
+        throw std::runtime_error(std::string("Erro ao carregar SDL. ") + std::string(SDL_GetError()));
+    }
+
+    if (IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) != (IMG_INIT_JPG | IMG_INIT_PNG))
+    {
+        throw std::runtime_error(std::string("Erro ao carregar SDL_IMG. ") + std::string(SDL_GetError()));
+    }
+
+    if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG) != (MIX_INIT_MP3 | MIX_INIT_OGG))
+    {
+        throw std::runtime_error(std::string("Erro ao carregar SDL_MIX. ") + std::string(SDL_GetError()));
+    }
+
+    if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) != 0)
+    {
+        throw std::runtime_error(std::string("Erro ao executar Mix_OpenAudio. ") + std::string(SDL_GetError()));
+    }
+
+    Mix_AllocateChannels(32);
+
+    window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
+    if (window == nullptr)
+    {
+        throw std::runtime_error("Erro ao criar janela.");
+    }
+
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (renderer == nullptr)
+    {
+        throw std::runtime_error("Erro ao criar renderer.");
+    }
+
+    if (TTF_Init() != 0)
+    {
+        throw std::runtime_error(std::string("Erro ao carregar SDL_Ttf. ") + std::string(SDL_GetError()));
+    }
+
+    srand(time(NULL));
+
+    storedState = nullptr;
 }
+
 
 Game &Game::GetInstance()
 {
@@ -30,30 +76,25 @@ int Game::GetHeight()
     return height;
 }
 
-/* Game &Game::GetInstance()
-{
 
-    if (instance == nullptr)
-    {
-        instance = new Game("Yan Tavares, 202041323 :)", 1024, 600);
-        instance->width = 1024;
-        instance->height = 600;
-    }
-    return *instance;
-} */
 
 Game::~Game()
 {
-    if (storedState != nullptr)
+    if (storedState)
     {
         delete storedState;
     }
 
-    // Clear the states from the stack
     while (!stateStack.empty())
     {
         stateStack.pop();
     }
+
+    Resources::ClearImages();
+    Resources::ClearMusics();
+    Resources::ClearSounds();
+
+    TTF_Quit();
 
     Mix_CloseAudio();
     Mix_Quit();
@@ -62,8 +103,8 @@ Game::~Game()
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-
     SDL_Quit();
+    std::cout << "Game destroyed successfully\n";
 }
 
 State &Game::GetState()
@@ -99,52 +140,46 @@ float Game::GetDeltaTime()
     return dt;
 }
 
+
 void Game::Run()
 {
-    if (storedState == nullptr)
-    {
-        cerr << "Error: No initial game state provided." << endl;
-        exit(1);
+    if (storedState) {
+        stateStack.emplace(storedState);
+        stateStack.top()->Start();
+        storedState = nullptr;
+    }
+    if(stateStack.empty()) {
+        throw std::runtime_error("Game iniciado sem estado inicial.");
     }
 
-    stateStack.emplace(storedState);
-    storedState = nullptr;
-
-    stateStack.top()->Start();
-
-    while (!stateStack.empty())
+    while (!stateStack.empty() && stateStack.top()->QuitRequested() == false)
     {
-        if (stateStack.top()->QuitRequested())
+        if (stateStack.top()->PopRequested())
         {
             stateStack.pop();
             if (!stateStack.empty())
             {
                 stateStack.top()->Resume();
             }
-            continue;
         }
-
-        if (storedState != nullptr)
+        if (storedState)
         {
-            stateStack.top()->Pause();
+            if (!stateStack.empty())
+            {
+                stateStack.top()->Pause();
+            }
             stateStack.emplace(storedState);
             stateStack.top()->Start();
             storedState = nullptr;
         }
-
         CalculateDeltaTime();
-        stateStack.top()->Update(GetDeltaTime());
+        InputManager::GetInstance().Update();
+        stateStack.top()->Update(dt);
         stateStack.top()->Render();
         SDL_RenderPresent(renderer);
-
-        InputManager &input = InputManager::GetInstance();
-
-        while (!state->QuitRequested())
-        {
-            CalculateDeltaTime();
-
-            SDL_RenderPresent(Game::GetInstance().GetRenderer());
-            input.Update();
-        }
+        SDL_Delay(2);
     }
+    Resources::ClearMusics();
+    Resources::ClearSounds();
+    Resources::ClearImages();
 }

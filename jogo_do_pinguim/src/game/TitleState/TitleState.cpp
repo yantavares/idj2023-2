@@ -12,10 +12,15 @@ TitleState::TitleState()
     quitRequested = false;
     popRequested = false;
 
+    cout << "Background" << endl;
+
     GameObject *background = new GameObject();
     Sprite *bg = new Sprite("../public/img/ocean.jpg", *background);
+    cout << "Box" << endl;
     background->box = {0, 0, bg->GetWidth(), bg->GetHeight()};
     background->AddComponent(bg);
+
+    cout << "CameraFollower" << endl;
 
     CameraFollower *newflwr = new CameraFollower(*background);
     background->AddComponent(bg);
@@ -29,6 +34,7 @@ TitleState::TitleState()
     text->box.y = Camera::pos.y + 400;
     text->box.x = Camera::pos.x + 40;
     AddObject(text);
+    cout << "Passed here" << endl;
     return;
 }
 

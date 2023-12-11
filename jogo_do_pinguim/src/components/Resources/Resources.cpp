@@ -8,21 +8,22 @@ unordered_map<string, Mix_Music *> Resources::musicTable;
 unordered_map<string, Mix_Chunk *> Resources::soundTable;
 unordered_map<string, TTF_Font *> Resources::fontTable;
 
-SDL_Texture *Resources::GetImage(string filepath)
+
+SDL_Texture *Resources::GetImage(std::string file)
 {
-    auto found = imageTable.find(filepath);
-    if (found == imageTable.end())
+    if (imageTable.find(file) == imageTable.end())
     {
-        SDL_Texture *texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), filepath.c_str());
+        SDL_Texture *texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
         if (!texture)
         {
-            throw runtime_error(SDL_GetError());
+            std::cerr << "Erro ao carregar imagem! [" << file << "]. " << SDL_GetError() << "\n";
+            exit(1);
         }
-        imageTable[filepath] = texture;
-        return texture;
+        imageTable.emplace(file, texture);
     }
-    return found->second;
+    return imageTable.at(file);
 }
+
 
 void Resources::ClearImages()
 {

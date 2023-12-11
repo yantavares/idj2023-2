@@ -16,6 +16,7 @@ Sprite::Sprite(string file, GameObject &associated, int frameCount, float frameT
     SetClip(0, 0, width, height);
     scale = Vec2(1, 1);
 
+
     this->frameCount = frameCount;
     this->frameTime = frameTime;
     this->currentFrame = 0;
