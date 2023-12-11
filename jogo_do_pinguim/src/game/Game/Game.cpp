@@ -4,7 +4,7 @@
 
 Game *Game::instance = nullptr;
 
-Game::Game(string title, int width, int height)
+Game::Game(string title, int width, int height): storedState(nullptr)
 {
     if (instance != nullptr)
     {
@@ -54,8 +54,6 @@ Game::Game(string title, int width, int height)
         exit(1);
     }
 
-    stageState = new StageState();
-
     frameStart = 0;
     dt = 0.0f;
 }
@@ -84,7 +82,7 @@ Game &Game::GetInstance()
 
 Game::~Game()
 {
-    delete &stageState;
+    delete &storedState;
 
     Mix_CloseAudio();
     Mix_Quit();
@@ -97,10 +95,10 @@ Game::~Game()
     SDL_Quit();
 }
 
-StageState &Game::GetStateState()
+State &Game::GetCurrentState()
 {
 
-    return *stageState;
+    return *storedState;
 }
 
 SDL_Renderer *Game::GetRenderer()
@@ -122,14 +120,55 @@ float Game::GetDeltaTime()
 void Game::Run()
 {
     InputManager &input = InputManager::GetInstance();
-    stageState = new StageState();
-    stageState->Start();
-    while (!stageState->QuitRequested())
+    storedState = new StageState();
+    storedState->Start();
+    while (!storedState->QuitRequested())
     {
         CalculateDeltaTime();
-        stageState->Render();
+        storedState->Render();
         SDL_RenderPresent(Game::GetInstance().GetRenderer());
         input.Update();
-        stageState->Update(GetDeltaTime());
+        storedState->Update(GetDeltaTime());
     }
+}
+
+void Game::Push(State* state) {
+    storedState = state;
+}
+
+void Game::Run() {
+    if (storedState != nullptr) {
+        stateStack.push_back(std::shared_ptr<State>(storedState));
+        stateStack.back()->Start();
+        storedState = nullptr;
+    } else {
+        // Encerrar o jogo se não houver estado inicial
+        return;
+    }
+
+    while (!stateStack.empty()) {
+        if (stateStack.back()->QuitRequested()) {
+            break;
+        }
+
+        if (stateStack.back()->PopRequested()) {
+            stateStack.pop_back();
+            if (!stateStack.empty()) {
+                stateStack.back()->Resume();
+            }
+        }
+
+        if (storedState != nullptr) {
+            stateStack.back()->Pause();
+            stateStack.push_back(std::shared_ptr<State>(storedState));
+            stateStack.back()->Start();
+            storedState = nullptr;
+        }
+
+        // Aqui, execute Update e Render para o estado atual
+        stateStack.back()->Update(dt);
+        stateStack.back()->Render();
+    }
+
+    // Limpeza dos recursos ao sair do jogo
 }
