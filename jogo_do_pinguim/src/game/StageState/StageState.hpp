@@ -9,11 +9,12 @@
 #include <memory>
 
 #include "../../components/Sprite/Sprite.hpp"
+#include "../State/State.hpp"
 #include "../Music/Music.hpp"
 
 using namespace std;
 
-class StageState
+class StageState : public State
 {
 public:
     StageState();

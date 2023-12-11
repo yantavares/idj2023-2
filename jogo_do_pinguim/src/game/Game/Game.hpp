@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "../StageState/StageState.hpp"
+#include "../State/State.hpp"
 
 using namespace std;
 
@@ -16,22 +17,30 @@ public:
     Game(string title, int width, int height);
     ~Game();
     void Run();
+
     SDL_Renderer *GetRenderer();
-    StageState &GetStateState();
+    State &GetCurrentState();
     static Game &GetInstance();
     int GetWidth();
     int GetHeight();
+
+    vector<shared_ptr<State>> stateStack;
+    State* storedState;
+
 
 private:
     static Game *instance;
     SDL_Window *window;
     SDL_Renderer *renderer;
-    StageState *stageState;
+    State *storedState;
 
     int frameStart;
     float dt;
     void CalculateDeltaTime();
     float GetDeltaTime();
+
+    void Push(State* state);
+    void Run();
 
     int width;
     int height;

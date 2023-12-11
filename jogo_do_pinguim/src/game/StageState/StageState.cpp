@@ -1,4 +1,5 @@
 #include "StageState.hpp"
+#include "../State/State.hpp"
 #include "../../geometry/Rect/Rect.hpp"
 #include "../../geometry/Vec2/Vec2.hpp"
 #include "../../components/Sound/Sound.hpp"
@@ -14,8 +15,7 @@
 #include "../../components/Collider/Collider.hpp"
 #include "../Collision/Collision.hpp"
 
-StageState::StageState()
-{
+StageState::StageState()  {
     music = nullptr;
     quitRequested = false;
     started = false;
