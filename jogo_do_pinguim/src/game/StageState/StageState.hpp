@@ -1,5 +1,5 @@
-#ifndef STATE_HPP
-#define STATE_HPP
+#ifndef StageState_HPP
+#define StageState_HPP
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class State
+class StageState
 {
 public:
-    State();
-    ~State();
+    StageState();
+    ~StageState();
     bool QuitRequested();
     void LoadAssets();
     void Update(float dt);

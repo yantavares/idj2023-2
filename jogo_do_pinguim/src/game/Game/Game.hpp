@@ -17,7 +17,7 @@ public:
     ~Game();
     void Run();
     SDL_Renderer *GetRenderer();
-    State &GetState();
+    StageState &GetStateState();
     static Game &GetInstance();
     int GetWidth();
     int GetHeight();
@@ -26,7 +26,7 @@ private:
     static Game *instance;
     SDL_Window *window;
     SDL_Renderer *renderer;
-    State *state;
+    StageState *stageState;
 
     int frameStart;
     float dt;

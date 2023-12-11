@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "../InputManager/InputManager.hpp"
+#include "../StageState/StageState.hpp"
 
 Game *Game::instance = nullptr;
 
@@ -53,7 +54,7 @@ Game::Game(string title, int width, int height)
         exit(1);
     }
 
-    state = new State();
+    stageState = new StageState();
 
     frameStart = 0;
     dt = 0.0f;
@@ -83,7 +84,7 @@ Game &Game::GetInstance()
 
 Game::~Game()
 {
-    delete &state;
+    delete &stageState;
 
     Mix_CloseAudio();
     Mix_Quit();
@@ -96,10 +97,10 @@ Game::~Game()
     SDL_Quit();
 }
 
-State &Game::GetState()
+StageState &Game::GetStateState()
 {
 
-    return *state;
+    return *stageState;
 }
 
 SDL_Renderer *Game::GetRenderer()
@@ -121,14 +122,14 @@ float Game::GetDeltaTime()
 void Game::Run()
 {
     InputManager &input = InputManager::GetInstance();
-    state = new State();
-    state->Start();
-    while (!state->QuitRequested())
+    stageState = new StageState();
+    stageState->Start();
+    while (!stageState->QuitRequested())
     {
         CalculateDeltaTime();
-        state->Render();
+        stageState->Render();
         SDL_RenderPresent(Game::GetInstance().GetRenderer());
         input.Update();
-        state->Update(GetDeltaTime());
+        stageState->Update(GetDeltaTime());
     }
 }
