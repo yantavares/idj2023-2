@@ -1,6 +1,6 @@
 # idj2023-2
 
-Repositório criado para abrigar os códigos da disciplina Introdução ao Desenvolvimento de jogos da UnB.
+Repositório criado para abrigar os códigos da disciplina Introdução ao Desenvolvimento de jogos da UnB: A Game engine feita em SDL2 e o Jogo do Pinguim.
 
 # Requisitos
 
